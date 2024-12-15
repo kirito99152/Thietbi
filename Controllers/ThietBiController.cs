@@ -48,8 +48,8 @@ namespace Thietbi.Controllers
         // GET: ThietBi/Create
         public IActionResult Create()
         {
-            ViewData["IdLoaiThietBi"] = new SelectList(_context.DmLoaiThietBis, "IdLoaiThietBi", "IdLoaiThietBi");
-            ViewData["IdTrangThaiThietBi"] = new SelectList(_context.DmTrangThaiThietBis, "IdTrangThaiThietBi", "IdTrangThaiThietBi");
+            ViewData["IdLoaiThietBi"] = new SelectList(_context.DmLoaiThietBis, "IdLoaiThietBi", "LoaiThietBi");
+            ViewData["IdTrangThaiThietBi"] = new SelectList(_context.DmTrangThaiThietBis, "IdTrangThaiThietBi", "TrangThaiThietBi");
             return View();
         }
 
@@ -84,8 +84,8 @@ namespace Thietbi.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdLoaiThietBi"] = new SelectList(_context.DmLoaiThietBis, "IdLoaiThietBi", "IdLoaiThietBi", tbThietBi.IdLoaiThietBi);
-            ViewData["IdTrangThaiThietBi"] = new SelectList(_context.DmTrangThaiThietBis, "IdTrangThaiThietBi", "IdTrangThaiThietBi", tbThietBi.IdTrangThaiThietBi);
+            ViewData["IdLoaiThietBi"] = new SelectList(_context.DmLoaiThietBis, "IdLoaiThietBi", "LoaiThietBi", tbThietBi.IdLoaiThietBi);
+            ViewData["IdTrangThaiThietBi"] = new SelectList(_context.DmTrangThaiThietBis, "IdTrangThaiThietBi", "TrangThaiThietBi", tbThietBi.IdTrangThaiThietBi);
             return View(tbThietBi);
         }
 
