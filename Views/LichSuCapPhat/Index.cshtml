@@ -1,144 +1,134 @@
-@model IEnumerable<Thietbi.Models.TbLichSuCapPhat>
+﻿@model IEnumerable<Thietbi.Models.TbLichSuCapPhat>
 
 @{
     ViewData["Title"] = "Index";
 }
-<h1 style="text-align:center; color:darkred"><B>L?CH S? C?P PH�T</B></h1>
+<h1 style="text-align:center; color:darkred"><b>LỊCH SỬ CẤP PHÁT</b></h1>
 <p class="text-end">
     <a asp-action="Create" class="btn btn-success">
-        <i class="bi bi-plus-circle"></i> T?o V?n B?n M?i
+        <i class="bi bi-plus-circle"></i> Tạo Văn Bản Mới
     </a>
 </p>
 
 <style>
-    /* ??t vi?n ?en cho b?ng */
+    /* Đặt viền đen cho bảng */
     .table {
-        border: 3px solid black; /* Vi?n ?en cho b?ng */
-        border-radius: 10px; /* Bo g�c cho b?ng */
-        border-collapse: separate; /* ?? bo g�c kh�ng b? ?nh h??ng */
+        border: 3px solid black; /* Viền đen cho bảng */
+        border-radius: 10px; /* Bo góc cho bảng */
+        border-collapse: separate; /* Để bo góc không bị ảnh hưởng */
     }
 
         .table th, .table td {
-            border: 2px solid black; /* Th�m vi?n ?en cho c�c � ti�u ?? v� d? li?u */
+            border: 2px solid black; /* Thêm viền đen cho các ô tiêu đề và dữ liệu */
             padding: 10px;
             text-align: center;
         }
 
         .table th {
-            background-color: #4CAF50; /* M�u n?n cho � ti�u ?? */
-            color: white; /* M�u ch? tr?ng cho � ti�u ?? */
-            text-align: center; /* C?n gi?a n?i dung */
-            font-weight: bold; /* Ch? ??m */
+            background-color: #4CAF50; /* Màu nền cho ô tiêu đề */
+            color: white; /* Màu chữ trắng cho ô tiêu đề */
+            text-align: center; /* Căn giữa nội dung */
+            font-weight: bold; /* Chữ đậm */
         }
 
         .table td {
-            background-color: #f9f9f9; /* M�u n?n cho � d? li?u */
-            color: black; /* M�u ch? ?en cho � d? li?u */
-            text-align: center; /* C?n gi?a n?i dung */
+            background-color: #f9f9f9; /* Màu nền cho ô dữ liệu */
+            color: black; /* Màu chữ đen cho ô dữ liệu */
+            text-align: center; /* Căn giữa nội dung */
         }
 
         .table tbody tr:nth-child(odd) td {
-            background-color: #e6f7ff; /* M�u n?n cho c�c � d? li?u ? h�ng l? */
+            background-color: #e6f7ff; /* Màu nền cho các ô dữ liệu ở hàng lẻ */
         }
 
         .table tbody tr:nth-child(even) td {
-            background-color: #fff2e6; /* M�u n?n cho c�c � d? li?u ? h�ng ch?n */
+            background-color: #fff2e6; /* Màu nền cho các ô dữ liệu ở hàng chẵn */
         }
 
     body {
         background: rgb(93, 173, 146);
     }
 </style>
+
 @{
     int stt = 0;
 }
+
 <table id="ntable" class="table">
     <thead>
-        <track style="text-align:center">
-    <th>STT</th>
-            <th>
-                ID NG??I ???C GIAO
-            </th>
-            <th>
-                ID ??N V? ???C GIAO
-            </th>
-            <th>
-                ID NG??I C?P PH�T
-            </th>
-            <th>
-                TH?I GIAN C?P PH�T
-            </th>
-            <th>
-                TH?I GIAN THU H?I
-            </th>
-            <th>
-                GHI CH�
-            </th>
-            <th>
-                THI?T B?
-            </th>
+        <tr style="text-align:center">
+            <th>STT</th>
+            <th>ID NGƯỜI ĐƯỢC GIAO</th>
+            <th>ID ĐƠN VỊ ĐƯỢC GIAO</th>
+            <th>ID NGƯỜI CẤP PHÁT</th>
+            <th>THỜI GIAN CẤP PHÁT</th>
+            <th>THỜI GIAN THU HỒI</th>
+            <th>GHI CHÚ</th>
+            <th>THIẾT BỊ</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>@(++stt)</td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdNguoiDuocGiao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdDonViDuocGiao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdNguoiCapPhat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThoiGianCapPhat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThoiGianThuHoi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GhiChu)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdThietBiNavigation.TenThietBi)
-            </td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@(++stt)</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdNguoiDuocGiao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdDonViDuocGiao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdNguoiCapPhat)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ThoiGianCapPhat)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ThoiGianThuHoi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GhiChu)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdThietBiNavigation.TenThietBi)
+                </td>
                 <td class="text-center">
                     <div class="btn-group" role="group">
                         <a asp-action="Edit" asp-route-id="@item.IdLichSuCapPhat" class="btn btn-sm btn-primary">
-                            <i class="bi bi-pencil-square"></i> S?a
+                            <i class="bi bi-pencil-square"></i> Sửa
                         </a>
                         <a asp-action="Details" asp-route-id="@item.IdLichSuCapPhat" class="btn btn-sm btn-info">
-                            <i class="bi bi-info-circle"></i> Chi Ti?t
+                            <i class="bi bi-info-circle"></i> Chi Tiết
                         </a>
                         <a asp-action="Delete" asp-route-id="@item.IdLichSuCapPhat" class="btn btn-sm btn-danger">
-                            <i class="bi bi-trash"></i> X�a
+                            <i class="bi bi-trash"></i> Xóa
                         </a>
                     </div>
                 </td>
-        </tr>
-}
+            </tr>
+        }
     </tbody>
 </table>
-<script>
 
+<script>
     new DataTable('#ntable', {
-        searching: true, // M?c ??nh l� true, set false ?? t?t ch?c n?ng search
-        info: true, // T?t th�ng tin v? table VD: Showing 1 to 14 of 14 entries
+        searching: true, // Mặc định là true, set false thì tắt chức năng search
+        info: true, // Tắt thông tin về table VD: Showing 1 to 14 of 14 entries
         language: {
-            search: "T�m ki?m",
-            lengthMenu: "?i?u ch?nh s? l??ng b?n ghi tr�n 1 trang _MENU_ ",
-            info: "T?ng c?ng _TOTAL_ b?n ghi",
-            zeroRecords: "kh�ng t�m th?y k?t qu? ph� h?p",
-            emptyTable: "Kh�ng c� d? li?u",
+            search: "Tìm kiếm",
+            lengthMenu: "Điều chỉnh số lượng bản ghi trên 1 trang _MENU_ ",
+            info: "Tổng cộng _TOTAL_ bản ghi",
+            zeroRecords: "không tìm thấy kết quả phù hợp",
+            emptyTable: "Không có dữ liệu",
             paginate: {
-                first: "Trang ??u",
-                previous: "Trang tr??c",
+                first: "Trang đầu",
+                previous: "Trang trước",
                 next: "Trang sau",
-                last: "Trang cu?i"
+                last: "Trang cuối"
             },
         },
     });
 </script>
+z
