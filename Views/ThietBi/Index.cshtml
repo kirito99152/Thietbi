@@ -1,49 +1,90 @@
-@model IEnumerable<Thietbi.Models.TbThietBi>
+﻿@model IEnumerable<Thietbi.Models.TbThietBi>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
+<h1 style="text-align:center; color:darkred"><B>THIẾT BỊ</B></h1>
+<p class="text-end">
+    <a asp-action="Create" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i> Tạo Văn Bản Mới
+    </a>
 </p>
-<table class="table">
+
+<style>
+ /* Đặt viền đen cho bảng */
+    .table {
+        border: 3px solid black; /* Viền đen cho bảng */
+        border-radius: 10px; /* Bo góc cho bảng */
+        border-collapse: separate; /* Để bo góc không bị ảnh hưởng */
+    }
+
+    .table th, .table td {
+            border: 2px solid black; /* Thêm viền đen cho các ô tiêu đề và dữ liệu */
+            padding: 10px;
+            text-align: center;
+    }
+    .table th {
+        background-color: #4CAF50; /* Màu nền cho ô tiêu đề */
+        color: white; /* Màu chữ trắng cho ô tiêu đề */
+        text-align: center; /* Căn giữa nội dung */
+        font-weight: bold; /* Chữ đậm */
+    }
+    .table td {
+        background-color: #f9f9f9; /* Màu nền cho ô dữ liệu */
+        color: black; /* Màu chữ đen cho ô dữ liệu */
+        text-align: center; /* Căn giữa nội dung */
+    }
+    .table tbody tr:nth-child(odd) td {
+        background-color: #e6f7ff; /* Màu nền cho các ô dữ liệu ở hàng lẻ */
+    }
+    .table tbody tr:nth-child(even) td {
+        background-color: #fff2e6; /* Màu nền cho các ô dữ liệu ở hàng chẵn */
+    }
+    body{
+        background: rgb(93, 173, 146);
+    }
+</style>
+
+@{
+    int stt = 0;
+}
+<table id="ntable" class="table">
     <thead>
-        <tr>
+        <track style="text-align:center">
+    <th>STT</th>
             <th>
-                @Html.DisplayNameFor(model => model.IdNguoiSoHuu)
+                ID NGƯỜI SỞ HỮU
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdDonViSoHuu)
+                ID ĐƠN VỊ SỞ HỮU
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NgayThemThietBi)
+                NGÀY THÊM THIẾT BỊ
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TenThietBi)
+                TÊN THIẾT BỊ
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MoTa)
+                MÔ TẢ
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MaThietBiHv)
+                MÃ THIẾT BỊ HV
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MaThietBiNhaSx)
+                MÃ THIẾT BỊ NHÀ XS
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CauHinh)
+                CẤU HÌNH
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ViTriDat)
+                VỊ TRÍ ĐẶT
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdLoaiThietBiNavigation)
+                LOẠI THIẾT BỊ
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdTrangThaiThietBiNavigation)
+                TRẠNG THÁI THIẾT BỊ
             </th>
             <th></th>
         </tr>
@@ -51,6 +92,7 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>@(++stt)</td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdNguoiSoHuu)
             </td>
@@ -84,11 +126,19 @@
             <td>
                 @Html.DisplayFor(modelItem => item.IdTrangThaiThietBiNavigation.IdTrangThaiThietBi)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdThietBi">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdThietBi">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdThietBi">Delete</a>
-            </td>
+                <td class="text-center">
+                    <div class="btn-group" role="group">
+                        <a asp-action="Edit" asp-route-id="@item.IdThietBi" class="btn btn-sm btn-primary">
+                            <i class="bi bi-pencil-square"></i> Sửa
+                        </a>
+                        <a asp-action="Details" asp-route-id="@item.IdThietBi" class="btn btn-sm btn-info">
+                            <i class="bi bi-info-circle"></i> Chi Tiết
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@item.IdThietBi" class="btn btn-sm btn-danger">
+                            <i class="bi bi-trash"></i> Xóa
+                        </a>
+                    </div>
+                </td>
         </tr>
 }
     </tbody>
