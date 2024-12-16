@@ -1,52 +1,99 @@
-@model IEnumerable<Thietbi.Models.TbLichSuSuaChua>
+﻿@model IEnumerable<Thietbi.Models.TbLichSuSuaChua>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
+
+<h1 style="text-align:center; color:darkred"><B>LỊCH SỬ SỬA CHỮA</B></h1>
+<p class="text-end">
+    <a asp-action="Create" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i> Tạo Văn Bản Mới
+    </a>
 </p>
-<table class="table">
+
+<style>
+    /* Đặt viền đen cho bảng */
+    .table {
+        border: 3px solid black; /* Viền đen cho bảng */
+        border-radius: 10px; /* Bo góc cho bảng */
+        border-collapse: separate; /* Để bo góc không bị ảnh hưởng */
+    }
+
+        .table th, .table td {
+            border: 2px solid black; /* Thêm viền đen cho các ô tiêu đề và dữ liệu */
+            padding: 10px;
+            text-align: center;
+        }
+
+        .table th {
+            background-color: #4CAF50; /* Màu nền cho ô tiêu đề */
+            color: white; /* Màu chữ trắng cho ô tiêu đề */
+            text-align: center; /* Căn giữa nội dung */
+            font-weight: bold; /* Chữ đậm */
+        }
+
+        .table td {
+            background-color: #f9f9f9; /* Màu nền cho ô dữ liệu */
+            color: black; /* Màu chữ đen cho ô dữ liệu */
+            text-align: center; /* Căn giữa nội dung */
+        }
+
+        .table tbody tr:nth-child(odd) td {
+            background-color: #e6f7ff; /* Màu nền cho các ô dữ liệu ở hàng lẻ */
+        }
+
+        .table tbody tr:nth-child(even) td {
+            background-color: #fff2e6; /* Màu nền cho các ô dữ liệu ở hàng chẵn */
+        }
+
+    body {
+        background: rgb(93, 173, 146);
+    }
+</style>
+@{
+    int stt = 0;
+}
+<table id="ntable" class="table">
     <thead>
-        <tr>
+        <track style="text-align:center">
+    <th>STT</th>
             <th>
-                @Html.DisplayNameFor(model => model.IdNguoiBao)
+                ID NGƯỜI BÁO
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdDonViBao)
+                ID ĐƠN VỊ BÁO
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdCanBoSua)
+                ID CÁN BỘ SỬA CHỮA
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdDonViSua)
+                ID ĐƠN VỊ SỬA CHỮA
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ThoiGianBatDau)
+                THỜI GIAN BẮT ĐẦU
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ThoiGianKetThuc)
+                THỜI GIAN KẾT THÚC
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HienTuong)
+                HIỆN TƯỢNG
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NguyenNhanXacDinh)
+                NGUYÊN NHÂN XÁC ĐỊNH
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.KetQuaSua)
+                KẾT QUẢ SỬA CHỮA
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ThongTinSuaChua)
+                THÔNG TIN SỬA CHỮA
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CachSua)
+                CÁCH SỬA
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdThietBiNavigation)
+                THIẾT BỊ
             </th>
             <th></th>
         </tr>
@@ -54,6 +101,7 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>@(++stt)</td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdNguoiBao)
             </td>
@@ -90,12 +138,40 @@
             <td>
                 @Html.DisplayFor(modelItem => item.IdThietBiNavigation.IdThietBi)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdLichSuSuaChua">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdLichSuSuaChua">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdLichSuSuaChua">Delete</a>
-            </td>
+                <td class="text-center">
+                    <div class="btn-group" role="group">
+                        <a asp-action="Edit" asp-route-id="@item.IdLichSuSuaChua" class="btn btn-sm btn-primary">
+                            <i class="bi bi-pencil-square"></i> Sửa
+                        </a>
+                        <a asp-action="Details" asp-route-id="@item.IdLichSuSuaChua" class="btn btn-sm btn-info">
+                            <i class="bi bi-info-circle"></i> Chi Tiết
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@item.IdLichSuSuaChua" class="btn btn-sm btn-danger">
+                            <i class="bi bi-trash"></i> Xóa
+                        </a>
+                    </div>
+                </td>
         </tr>
 }
     </tbody>
 </table>
+<script>
+
+    new DataTable('#ntable', {
+        searching: true, // Mặc định là true, set false để tắt chức năng search
+        info: true, // Tắt thông tin về table VD: Showing 1 to 14 of 14 entries
+        language: {
+            search: "Tìm kiếm",
+            lengthMenu: "Điều chỉnh số lượng bản ghi trên 1 trang _MENU_ ",
+            info: "Tổng cộng _TOTAL_ bản ghi",
+            zeroRecords: "không tìm thấy kết quả phù hợp",
+            emptyTable: "Không có dữ liệu",
+            paginate: {
+                first: "Trang đầu",
+                previous: "Trang trước",
+                next: "Trang sau",
+                last: "Trang cuối"
+            },
+        },
+    });
+</script>

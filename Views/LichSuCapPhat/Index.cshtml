@@ -3,35 +3,79 @@
 @{
     ViewData["Title"] = "Index";
 }
-
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
+<h1 style="text-align:center; color:darkred"><B>L?CH S? C?P PHÁT</B></h1>
+<p class="text-end">
+    <a asp-action="Create" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i> T?o V?n B?n M?i
+    </a>
 </p>
-<table class="table">
+
+<style>
+    /* ??t vi?n ?en cho b?ng */
+    .table {
+        border: 3px solid black; /* Vi?n ?en cho b?ng */
+        border-radius: 10px; /* Bo góc cho b?ng */
+        border-collapse: separate; /* ?? bo góc không b? ?nh h??ng */
+    }
+
+        .table th, .table td {
+            border: 2px solid black; /* Thêm vi?n ?en cho các ô tiêu ?? và d? li?u */
+            padding: 10px;
+            text-align: center;
+        }
+
+        .table th {
+            background-color: #4CAF50; /* Màu n?n cho ô tiêu ?? */
+            color: white; /* Màu ch? tr?ng cho ô tiêu ?? */
+            text-align: center; /* C?n gi?a n?i dung */
+            font-weight: bold; /* Ch? ??m */
+        }
+
+        .table td {
+            background-color: #f9f9f9; /* Màu n?n cho ô d? li?u */
+            color: black; /* Màu ch? ?en cho ô d? li?u */
+            text-align: center; /* C?n gi?a n?i dung */
+        }
+
+        .table tbody tr:nth-child(odd) td {
+            background-color: #e6f7ff; /* Màu n?n cho các ô d? li?u ? hàng l? */
+        }
+
+        .table tbody tr:nth-child(even) td {
+            background-color: #fff2e6; /* Màu n?n cho các ô d? li?u ? hàng ch?n */
+        }
+
+    body {
+        background: rgb(93, 173, 146);
+    }
+</style>
+@{
+    int stt = 0;
+}
+<table id="ntable" class="table">
     <thead>
-        <tr>
+        <track style="text-align:center">
+    <th>STT</th>
             <th>
-                @Html.DisplayNameFor(model => model.IdNguoiDuocGiao)
+                ID NG??I ???C GIAO
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdDonViDuocGiao)
+                ID ??N V? ???C GIAO
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdNguoiCapPhat)
+                ID NG??I C?P PHÁT
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ThoiGianCapPhat)
+                TH?I GIAN C?P PHÁT
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ThoiGianThuHoi)
+                TH?I GIAN THU H?I
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.GhiChu)
+                GHI CHÚ
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdThietBiNavigation)
+                THI?T B?
             </th>
             <th></th>
         </tr>
@@ -39,6 +83,7 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>@(++stt)</td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdNguoiDuocGiao)
             </td>
@@ -60,12 +105,40 @@
             <td>
                 @Html.DisplayFor(modelItem => item.IdThietBiNavigation.IdThietBi)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdLichSuCapPhat">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdLichSuCapPhat">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdLichSuCapPhat">Delete</a>
-            </td>
+                <td class="text-center">
+                    <div class="btn-group" role="group">
+                        <a asp-action="Edit" asp-route-id="@item.IdLichSuCapPhat" class="btn btn-sm btn-primary">
+                            <i class="bi bi-pencil-square"></i> S?a
+                        </a>
+                        <a asp-action="Details" asp-route-id="@item.IdLichSuCapPhat" class="btn btn-sm btn-info">
+                            <i class="bi bi-info-circle"></i> Chi Ti?t
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@item.IdLichSuCapPhat" class="btn btn-sm btn-danger">
+                            <i class="bi bi-trash"></i> Xóa
+                        </a>
+                    </div>
+                </td>
         </tr>
 }
     </tbody>
 </table>
+<script>
+
+    new DataTable('#ntable', {
+        searching: true, // M?c ??nh là true, set false ?? t?t ch?c n?ng search
+        info: true, // T?t thông tin v? table VD: Showing 1 to 14 of 14 entries
+        language: {
+            search: "Tìm ki?m",
+            lengthMenu: "?i?u ch?nh s? l??ng b?n ghi trên 1 trang _MENU_ ",
+            info: "T?ng c?ng _TOTAL_ b?n ghi",
+            zeroRecords: "không tìm th?y k?t qu? phù h?p",
+            emptyTable: "Không có d? li?u",
+            paginate: {
+                first: "Trang ??u",
+                previous: "Trang tr??c",
+                next: "Trang sau",
+                last: "Trang cu?i"
+            },
+        },
+    });
+</script>
