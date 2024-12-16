@@ -143,3 +143,23 @@
 }
     </tbody>
 </table>
+<script>
+
+    new DataTable('#ntable', {
+        searching: true, // Mặc định là true, set false để tắt chức năng search
+        info: true, // Tắt thông tin về table VD: Showing 1 to 14 of 14 entries
+        language: {
+            search: "Tìm kiếm",
+            lengthMenu: "Điều chỉnh số lượng bản ghi trên 1 trang _MENU_ ",
+            info: "Tổng cộng _TOTAL_ bản ghi",
+            zeroRecords: "không tìm thấy kết quả phù hợp",
+            emptyTable: "Không có dữ liệu",
+            paginate: {
+                first: "Trang đầu",
+                previous: "Trang trước",
+                next: "Trang sau",
+                last: "Trang cuối"
+            },
+        },
+    });
+</script>
