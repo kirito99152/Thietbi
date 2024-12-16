@@ -3,17 +3,64 @@
 }
 
 <h1 style="display: flex; justify-content: center;">Quản Lý Thiết Bị</h1>
-<div class="button-csvc">
-    <a href="/ThietBi=">Thiết Bị</a>
-    <hr />
-
-    <a href="/LichSuCapPhat" class="link">Lịch Sử Cấp Phát</a>
-    <hr />
-
-    <a href="/LichSuSuaChua" class="link">Lịch Sử Sửa Chữa</a>
-    <hr />
-
-    <a href="/QuanHeThietBi" class="link">Quan Hệ Thiết Bị</a>
-    <hr />
-
+<div class="list">
+    <div class="lien-ket">
+        <a class="link" href="/ThietBi=">Thiết Bị</a>
     </div>
+</div>
+<div class="list">
+    <div class="lien-ket">
+        <a class="link" href="/LichSuCapPhat">Lịch Sử Cấp Phát</a>
+    </div>
+</div>
+<div class="list">
+    <div class="lien-ket">
+        <a class="link" href="/LichSuSuaChua">Lịch Sử Sửa Chữa</a>
+    </div>
+</div>
+<div class="list">
+    <div class="lien-ket">
+        <a class="link" href="QuanHeThietBi">Quan Hệ Thiết Bị</a>
+    </div>
+</div>
+<style>
+    main {
+        border: 2px solid;
+        border-radius: 5%;
+        background-color: cadetblue;
+    }
+
+    .link {
+        color: black;
+        text-transform: uppercase;
+        text-decoration: none;
+        display: inline-block;
+        transition: transform 0.5s ease;
+        font-size: 25px;
+    }
+
+    .list:hover {
+        transform: scale(1.1);
+        color: black;
+    }
+
+    .link:hover {
+        color: black;
+    }
+
+    .list {
+        display: flex;
+        align-items: center; /* Căn giữa theo chiều dọc */
+        margin-bottom: 20px; /* Khoảng cách giữa các hàng */
+        padding: 0 65px;
+    }
+
+    .lien-ket {
+        background-color: #e8f4f2; /* Màu nền cho thanh dài */
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        border-radius: 0 15px 15px 0;
+    }
+
+</style>
