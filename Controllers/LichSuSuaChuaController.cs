@@ -47,7 +47,7 @@ namespace Thietbi.Controllers
         // GET: LichSuSuaChua/Create
         public IActionResult Create()
         {
-            ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "IdThietBi");
+            ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "TenThietBi");
             return View();
         }
 
@@ -81,7 +81,7 @@ namespace Thietbi.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "IdThietBi", tbLichSuSuaChua.IdThietBi);
+            ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "TenThietBi", tbLichSuSuaChua.IdThietBi);
             return View(tbLichSuSuaChua);
         }
 

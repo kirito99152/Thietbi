@@ -48,8 +48,8 @@ namespace Thietbi.Controllers
         // GET: QuanHeThietBi/Create
         public IActionResult Create()
         {
-            ViewData["IdThietBiCha"] = new SelectList(_context.TbThietBis, "IdThietBi", "IdThietBi");
-            ViewData["IdThietBiCon"] = new SelectList(_context.TbThietBis, "IdThietBi", "IdThietBi");
+            ViewData["IdThietBiCha"] = new SelectList(_context.TbThietBis, "IdThietBi", "TenThietBi");
+            ViewData["IdThietBiCon"] = new SelectList(_context.TbThietBis, "IdThietBi", "TenThietBi");
             return View();
         }
 
@@ -84,8 +84,8 @@ namespace Thietbi.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdThietBiCha"] = new SelectList(_context.TbThietBis, "IdThietBi", "IdThietBi", tbQuanHeThietBi.IdThietBiCha);
-            ViewData["IdThietBiCon"] = new SelectList(_context.TbThietBis, "IdThietBi", "IdThietBi", tbQuanHeThietBi.IdThietBiCon);
+            ViewData["IdThietBiCha"] = new SelectList(_context.TbThietBis, "IdThietBi", "TenThietBi", tbQuanHeThietBi.IdThietBiCha);
+            ViewData["IdThietBiCon"] = new SelectList(_context.TbThietBis, "IdThietBi", "TenThietBi", tbQuanHeThietBi.IdThietBiCon);
             return View(tbQuanHeThietBi);
         }
 
