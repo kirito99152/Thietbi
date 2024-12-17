@@ -236,7 +236,8 @@
                     <tr>
                         <td><label asp-for="IdNguoiBao" class="control-label"></label></td>
                         <td>
-                            <select asp-for="IdNguoiBao" class="form-control" asp-items="ViewBag.IdNguoiBao"></select>
+                            <input asp-for="IdNguoiBao" class="form-control" />
+                            <span asp-validation-for="IdNguoiBao" class="text-danger"></span>
                         </td>
                     </tr>
                     <tr>
