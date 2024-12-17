@@ -1,90 +1,167 @@
-@model Thietbi.Models.TbLichSuSuaChua
+﻿@model Thietbi.Models.TbLichSuSuaChua
 
 @{
     ViewData["Title"] = "Details";
 }
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@100..900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-color: #fff9e9;
+            color: #553f3a;
+            font-family: "IBM Plex Serif", serif;
+            font-weight: 500;
+            font-style: normal;
+            margin-bottom: 115px
+        }
 
-<h1>Details</h1>
+        .container {
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            margin: auto;
+            background-color: #ccdee2;
+            margin-top: 20px;
+        }
 
-<div>
-    <h4>TbLichSuSuaChua</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdNguoiBao)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdNguoiBao)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdDonViBao)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdDonViBao)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdCanBoSua)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdCanBoSua)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdDonViSua)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdDonViSua)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThoiGianBatDau)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThoiGianBatDau)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThoiGianKetThuc)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThoiGianKetThuc)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.HienTuong)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.HienTuong)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NguyenNhanXacDinh)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NguyenNhanXacDinh)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.KetQuaSua)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.KetQuaSua)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThongTinSuaChua)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThongTinSuaChua)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CachSua)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CachSua)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdThietBiNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdThietBiNavigation.IdThietBi)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdLichSuSuaChua">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+        h1 {
+            color: #553f3a;
+            text-align: center;
+        }
+
+        /* Khung vuông cho từng thông tin thiết bị */
+        .dl-box {
+            border: 1px solid #4b9ab4;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+            /* Định dạng hàng trong khung */
+            .dl-box dt {
+                font-weight: bold;
+                color: #553f3a;
+            }
+
+            .dl-box dd {
+                margin-bottom: 10px;
+                font-size: 16px;
+                color: #553f3a;
+            }
+
+        /* Căn chỉnh nút */
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn-custom {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+            .btn-custom:hover {
+                background-color: #357d9e;
+                color: #ffffff;
+            }
+
+        .btn-back {
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: 1px solid #4b9ab4;
+            border-radius: 5px;
+            background-color: transparent;
+            color: #4b9ab4;
+            transition: all 0.3s ease;
+        }
+
+            .btn-back:hover {
+                background-color: #4b9ab4;
+                color: #ffffff;
+                transform: scale(1.05);
+            }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>THÔNG TIN CHI TIẾT TÀI SẢN</h1>
+        <hr />
+
+        <div class="dl-box">
+            <dt>@Html.DisplayNameFor(model => model.IdNguoiBao)</dt>
+            <dd>@Html.DisplayFor(model => model.IdNguoiBao)</dd>
+        </div>
+
+        <div class="dl-box">
+            <dt>@Html.DisplayNameFor(model => model.IdDonViBao)</dt>
+            <dd>@Html.DisplayFor(model => model.IdDonViBao)</dd>
+        </div>
+
+        <div class="dl-box">
+            <dt>@Html.DisplayNameFor(model => model.IdCanBoSua)</dt>
+            <dd>@Html.DisplayFor(model => model.IdCanBoSua)</dd>
+        </div>
+
+        <div class="dl-box">
+            <dt>@Html.DisplayNameFor(model => model.IdDonViSua)</dt>
+            <dd>@Html.DisplayFor(model => model.IdDonViSua)</dd>
+        </div>
+
+        <div class="dl-box">
+            <dt>@Html.DisplayNameFor(model => model.ThoiGianBatDau)</dt>
+            <dd>@Html.DisplayFor(model => model.ThoiGianBatDau)</dd>
+        </div>
+
+        <div class="dl-box">
+            <dt>@Html.DisplayNameFor(model => model.ThoiGianKetThuc)</dt>
+            <dd>@Html.DisplayFor(model => model.ThoiGianKetThuc)</dd>
+        </div>
+
+        <div class="dl-box">
+            <dt>@Html.DisplayNameFor(model => model.HienTuong)</dt>
+            <dd>@Html.DisplayFor(model => model.HienTuong)</dd>
+        </div>
+
+        <div class="dl-box">
+            <dt>@Html.DisplayNameFor(model => model.NguyenNhanXacDinh)</dt>
+            <dd>@Html.DisplayFor(model => model.NguyenNhanXacDinh)</dd>
+        </div>
+
+        <div class="dl-box">
+            <dt>@Html.DisplayNameFor(model => model.KetQuaSua)</dt>
+            <dd>@Html.DisplayFor(model => model.KetQuaSua)</dd>
+        </div>
+
+        <div class="dl-box">
+            <dt>@Html.DisplayNameFor(model => model.ThongTinSuaChua)</dt>
+            <dd>@Html.DisplayFor(model => model.ThongTinSuaChua)</dd>
+        </div>
+
+        <div class="btn-container">
+            <a asp-action="Edit" asp-route-id="@Model?.IdLichSuSuaChua" class="btn btn-primary btn-custom">
+                <i class="fas fa-edit"></i> Chỉnh sửa
+            </a>
+            <a asp-action="Index" class="btn btn-back">
+                <i class="fas fa-arrow-left"></i> Quay lại danh sách
+            </a>
+        </div>
+    </div>
+</body>
