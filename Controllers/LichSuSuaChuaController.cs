@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -154,6 +154,39 @@ namespace Thietbi.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ChartData()
+        {
+            try
+            {
+                // Lấy dữ liệu sửa chữa từ DbContext
+                var data = await _context.TbLichSuSuaChuas
+                    .Include(t => t.IdThietBiNavigation) // Bao gồm bảng liên kết thiết bị
+                    .ToListAsync();
+
+                // Nhóm dữ liệu theo tên thiết bị và đếm số lượng sửa chữa
+                var chartData = data.GroupBy(x => x.IdThietBiNavigation.TenThietBi)
+                    .Select(g => new
+                    {
+                        Label = g.Key,  // Tên thiết bị
+                        Count = g.Count() // Số lần sửa chữa
+                    }).ToList();
+
+                // Trả về dữ liệu JSON cho biểu đồ
+                return Json(new
+                {
+                    labels = chartData.Select(x => x.Label).ToArray(),
+                    values = chartData.Select(x => x.Count).ToArray()
+                });
+            }
+            catch (Exception ex)
+            {
+                // Ghi log lỗi nếu cần thiết
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
 
         private bool TbLichSuSuaChuaExists(int id)
         {
