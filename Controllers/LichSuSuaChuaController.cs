@@ -54,19 +54,70 @@ namespace Thietbi.Controllers
         // POST: LichSuSuaChua/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: LichSuSuaChua/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdLichSuSuaChua,IdThietBi,IdNguoiBao,IdDonViBao,IdCanBoSua,IdDonViSua,ThoiGianBatDau,ThoiGianKetThuc,HienTuong,NguyenNhanXacDinh,KetQuaSua,ThongTinSuaChua,CachSua")] TbLichSuSuaChua tbLichSuSuaChua)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(tbLichSuSuaChua);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                // Kiểm tra nếu IdNguoiBao đã tồn tại trong cơ sở dữ liệu
+                var nguoiBaoExists = await _context.TbLichSuSuaChuas.AnyAsync(x => x.IdNguoiBao == tbLichSuSuaChua.IdNguoiBao);
+                if (nguoiBaoExists)
+                {
+                    ModelState.AddModelError("IdNguoiBao", "ID Người Báo đã tồn tại trong hệ thống.");
+                    ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "TenThietBi", tbLichSuSuaChua.IdThietBi);
+                    return View(tbLichSuSuaChua);
+                }
+                // Kiểm tra nếu IdDonViBao đã tồn tại trong cơ sở dữ liệu
+                var donViBaoExists = await _context.TbLichSuSuaChuas.AnyAsync(x => x.IdDonViBao == tbLichSuSuaChua.IdDonViBao);
+                if (donViBaoExists)
+                {
+                    ModelState.AddModelError("IdDonViBao", "ID Đơn Vị Báo đã tồn tại trong hệ thống.");
+                    ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "TenThietBi", tbLichSuSuaChua.IdThietBi);
+                    return View(tbLichSuSuaChua);
+                }
+
+                // Kiểm tra nếu IdCanBoSua đã tồn tại trong cơ sở dữ liệu
+                var canBoSuaExists = await _context.TbLichSuSuaChuas.AnyAsync(x => x.IdCanBoSua == tbLichSuSuaChua.IdCanBoSua);
+                if (canBoSuaExists)
+                {
+                    ModelState.AddModelError("IdCanBoSua", "ID Cán Bộ Sửa đã tồn tại trong hệ thống.");
+                    ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "TenThietBi", tbLichSuSuaChua.IdThietBi);
+                    return View(tbLichSuSuaChua);
+                }
+
+                // Kiểm tra nếu IdDonViSua đã tồn tại trong cơ sở dữ liệu
+                var donViSuaExists = await _context.TbLichSuSuaChuas.AnyAsync(x => x.IdDonViSua == tbLichSuSuaChua.IdDonViSua);
+                if (donViSuaExists)
+                {
+                    ModelState.AddModelError("IdDonViSua", "ID Đơn Vị Sửa đã tồn tại trong hệ thống.");
+                    ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "TenThietBi", tbLichSuSuaChua.IdThietBi);
+                    return View(tbLichSuSuaChua);
+                }
+
+                // Kiểm tra nếu Model hợp lệ
+                if (ModelState.IsValid)
+                {
+                    _context.Add(tbLichSuSuaChua);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+
+                ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "IdThietBi", tbLichSuSuaChua.IdThietBi);
+                return View(tbLichSuSuaChua);
             }
-            ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "IdThietBi", tbLichSuSuaChua.IdThietBi);
-            return View(tbLichSuSuaChua);
+            catch (Exception ex)
+            {
+                // Bắt lỗi nếu có ngoại lệ xảy ra
+                ModelState.AddModelError(string.Empty, $"Có lỗi xảy ra: {ex.Message}");
+                ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "TenThietBi", tbLichSuSuaChua.IdThietBi);
+                return View(tbLichSuSuaChua);
+            }
         }
+
+
+
 
         // GET: LichSuSuaChua/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -88,6 +139,7 @@ namespace Thietbi.Controllers
         // POST: LichSuSuaChua/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: LichSuSuaChua/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdLichSuSuaChua,IdThietBi,IdNguoiBao,IdDonViBao,IdCanBoSua,IdDonViSua,ThoiGianBatDau,ThoiGianKetThuc,HienTuong,NguyenNhanXacDinh,KetQuaSua,ThongTinSuaChua,CachSua")] TbLichSuSuaChua tbLichSuSuaChua)
@@ -97,29 +149,78 @@ namespace Thietbi.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            try
             {
-                try
+                // Kiểm tra nếu IdNguoiBao đã tồn tại trong cơ sở dữ liệu, ngoại trừ bản ghi đang chỉnh sửa
+                var nguoiBaoExists = await _context.TbLichSuSuaChuas.AnyAsync(x => x.IdNguoiBao == tbLichSuSuaChua.IdNguoiBao && x.IdLichSuSuaChua != tbLichSuSuaChua.IdLichSuSuaChua);
+                if (nguoiBaoExists)
                 {
-                    _context.Update(tbLichSuSuaChua);
-                    await _context.SaveChangesAsync();
+                    ModelState.AddModelError("IdNguoiBao", "ID Người Báo đã tồn tại trong hệ thống.");
+                    ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "TenThietBi", tbLichSuSuaChua.IdThietBi);
+                    return View(tbLichSuSuaChua);
                 }
-                catch (DbUpdateConcurrencyException)
+                // Kiểm tra nếu IdDonViBao đã tồn tại trong cơ sở dữ liệu, ngoại trừ bản ghi đang chỉnh sửa
+                var donViBaoExists = await _context.TbLichSuSuaChuas.AnyAsync(x => x.IdDonViBao == tbLichSuSuaChua.IdDonViBao && x.IdLichSuSuaChua != tbLichSuSuaChua.IdLichSuSuaChua);
+                if (donViBaoExists)
                 {
-                    if (!TbLichSuSuaChuaExists(tbLichSuSuaChua.IdLichSuSuaChua))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    ModelState.AddModelError("IdDonViBao", "ID Đơn Vị Báo đã tồn tại trong hệ thống.");
+                    ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "TenThietBi", tbLichSuSuaChua.IdThietBi);
+                    return View(tbLichSuSuaChua);
                 }
-                return RedirectToAction(nameof(Index));
+
+                // Kiểm tra nếu IdCanBoSua đã tồn tại trong cơ sở dữ liệu, ngoại trừ bản ghi đang chỉnh sửa
+                var canBoSuaExists = await _context.TbLichSuSuaChuas.AnyAsync(x => x.IdCanBoSua == tbLichSuSuaChua.IdCanBoSua && x.IdLichSuSuaChua != tbLichSuSuaChua.IdLichSuSuaChua);
+                if (canBoSuaExists)
+                {
+                    ModelState.AddModelError("IdCanBoSua", "ID Cán Bộ Sửa đã tồn tại trong hệ thống.");
+                    ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "TenThietBi", tbLichSuSuaChua.IdThietBi);
+                    return View(tbLichSuSuaChua);
+                }
+
+                // Kiểm tra nếu IdDonViSua đã tồn tại trong cơ sở dữ liệu, ngoại trừ bản ghi đang chỉnh sửa
+                var donViSuaExists = await _context.TbLichSuSuaChuas.AnyAsync(x => x.IdDonViSua == tbLichSuSuaChua.IdDonViSua && x.IdLichSuSuaChua != tbLichSuSuaChua.IdLichSuSuaChua);
+                if (donViSuaExists)
+                {
+                    ModelState.AddModelError("IdDonViSua", "ID Đơn Vị Sửa đã tồn tại trong hệ thống.");
+                    ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "TenThietBi", tbLichSuSuaChua.IdThietBi);
+                    return View(tbLichSuSuaChua);
+                }
+
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        _context.Update(tbLichSuSuaChua);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!TbLichSuSuaChuaExists(tbLichSuSuaChua.IdLichSuSuaChua))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+
+                ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "TenThietBi", tbLichSuSuaChua.IdThietBi);
+                return View(tbLichSuSuaChua);
             }
-            ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "IdThietBi", tbLichSuSuaChua.IdThietBi);
-            return View(tbLichSuSuaChua);
+            catch (Exception ex)
+            {
+                // Bắt lỗi nếu có ngoại lệ xảy ra
+                ModelState.AddModelError(string.Empty, $"Có lỗi xảy ra: {ex.Message}");
+                ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "TenThietBi", tbLichSuSuaChua.IdThietBi);
+                return View(tbLichSuSuaChua);
+            }
         }
+
+
+
 
         // GET: LichSuSuaChua/Delete/5
         public async Task<IActionResult> Delete(int? id)
