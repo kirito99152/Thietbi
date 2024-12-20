@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -54,18 +54,38 @@ namespace Thietbi.Controllers
         }
 
         // POST: ThietBi/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdThietBi,IdNguoiSoHuu,IdDonViSoHuu,IdTrangThaiThietBi,IdLoaiThietBi,NgayThemThietBi,TenThietBi,MoTa,MaThietBiHv,MaThietBiNhaSx,CauHinh,ViTriDat")] TbThietBi tbThietBi)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(tbThietBi);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    // Kiểm tra trùng IdNguoiSoHuu
+                    if (_context.TbThietBis.Any(e => e.IdNguoiSoHuu == tbThietBi.IdNguoiSoHuu))
+                    {
+                        ModelState.AddModelError("IdNguoiSoHuu", "ID Người Sở Hữu đã tồn tại.");
+                        throw new Exception("ID Người Sở Hữu bị trùng.");
+                    }
+
+                    // Kiểm tra trùng IdDonViSoHuu
+                    if (_context.TbThietBis.Any(e => e.IdDonViSoHuu == tbThietBi.IdDonViSoHuu))
+                    {
+                        ModelState.AddModelError("IdDonViSoHuu", "ID Đơn Vị Sở Hữu đã tồn tại.");
+                        throw new Exception("ID Đơn Vị Sở Hữu bị trùng.");
+                    }
+
+                    _context.Add(tbThietBi);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"Có lỗi xảy ra: {ex.Message}");
+            }
+
             ViewData["IdLoaiThietBi"] = new SelectList(_context.DmLoaiThietBis, "IdLoaiThietBi", "IdLoaiThietBi", tbThietBi.IdLoaiThietBi);
             ViewData["IdTrangThaiThietBi"] = new SelectList(_context.DmTrangThaiThietBis, "IdTrangThaiThietBi", "IdTrangThaiThietBi", tbThietBi.IdTrangThaiThietBi);
             return View(tbThietBi);
@@ -90,8 +110,6 @@ namespace Thietbi.Controllers
         }
 
         // POST: ThietBi/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdThietBi,IdNguoiSoHuu,IdDonViSoHuu,IdTrangThaiThietBi,IdLoaiThietBi,NgayThemThietBi,TenThietBi,MoTa,MaThietBiHv,MaThietBiNhaSx,CauHinh,ViTriDat")] TbThietBi tbThietBi)
@@ -101,26 +119,34 @@ namespace Thietbi.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            try
             {
-                try
+                if (ModelState.IsValid)
                 {
+                    // Kiểm tra trùng IdNguoiSoHuu
+                    if (_context.TbThietBis.Any(e => e.IdNguoiSoHuu == tbThietBi.IdNguoiSoHuu && e.IdThietBi != id))
+                    {
+                        ModelState.AddModelError("IdNguoiSoHuu", "ID Người Sở Hữu đã tồn tại.");
+                        throw new Exception("ID Người Sở Hữu bị trùng.");
+                    }
+
+                    // Kiểm tra trùng IdDonViSoHuu
+                    if (_context.TbThietBis.Any(e => e.IdDonViSoHuu == tbThietBi.IdDonViSoHuu && e.IdThietBi != id))
+                    {
+                        ModelState.AddModelError("IdDonViSoHuu", "ID Đơn Vị Sở Hữu đã tồn tại.");
+                        throw new Exception("ID Đơn Vị Sở Hữu bị trùng.");
+                    }
+
                     _context.Update(tbThietBi);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TbThietBiExists(tbThietBi.IdThietBi))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
             }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"Có lỗi xảy ra: {ex.Message}");
+            }
+
             ViewData["IdLoaiThietBi"] = new SelectList(_context.DmLoaiThietBis, "IdLoaiThietBi", "IdLoaiThietBi", tbThietBi.IdLoaiThietBi);
             ViewData["IdTrangThaiThietBi"] = new SelectList(_context.DmTrangThaiThietBis, "IdTrangThaiThietBi", "IdTrangThaiThietBi", tbThietBi.IdTrangThaiThietBi);
             return View(tbThietBi);
