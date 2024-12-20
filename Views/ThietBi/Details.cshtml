@@ -1,84 +1,108 @@
-@model Thietbi.Models.TbThietBi
+﻿@model Thietbi.Models.TbThietBi
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Chi Tiết Thiết Bị ";
 }
 
-<h1>Details</h1>
+<div class="container mt-5">
+    <!-- Thêm hình ảnh Học viện An Ninh vào góc trên bên trái -->
+    <div style="position: relative;">
+        <img src="/images/Logo_hoc_vien_ANND.png" alt="Logo Học Viện An Ninh" class="logo-img"
+             style="position: absolute; top: -70px; left: 10px;" />
+    </div>
+    <h1 class="text-center my-4">Thông Tin Thiết Bị</h1>
 
-<div>
-    <h4>TbThietBi</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdNguoiSoHuu)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdNguoiSoHuu)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdDonViSoHuu)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdDonViSoHuu)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NgayThemThietBi)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NgayThemThietBi)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TenThietBi)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TenThietBi)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MoTa)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MoTa)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MaThietBiHv)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaThietBiHv)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MaThietBiNhaSx)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaThietBiNhaSx)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CauHinh)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CauHinh)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ViTriDat)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ViTriDat)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdLoaiThietBiNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdLoaiThietBiNavigation.IdLoaiThietBi)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdTrangThaiThietBiNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdTrangThaiThietBiNavigation.IdTrangThaiThietBi)
-        </dd>
-    </dl>
+    <div class="card shadow-lg rounded-lg p-4">
+        <div class="card-body">
+            <!-- Tab Navigation -->
+            <ul class="nav nav-tabs" id="tabContent">
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#general">Thông Tin Chung</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#details">Chi Tiết Thiết Bị</a>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content mt-4">
+                <!-- Thông Tin Chung Tab -->
+                <div class="tab-pane fade show active" id="general">
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                                    Thông Tin Sở Hữu
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show">
+                                <div class="accordion-body">
+                                    <p><strong>Người Sở Hữu:</strong> @Html.DisplayFor(model => model.IdNguoiSoHuu)</p>
+                                    <p><strong>Đơn Vị Sở Hữu:</strong> @Html.DisplayFor(model => model.IdDonViSoHuu)</p>
+                                    <p><strong>Ngày Thêm:</strong> @Html.DisplayFor(model => model.NgayThemThietBi)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chi Tiết Thiết Bị Tab -->
+                <div class="tab-pane fade" id="details">
+                    <div class="accordion" id="accordionExample2">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                                    Thông Tin Thiết Bị
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <p><strong>Tên Thiết Bị:</strong> @Html.DisplayFor(model => model.TenThietBi)</p>
+                                    <p><strong>Mô Tả:</strong> @Html.DisplayFor(model => model.MoTa)</p>
+                                    <p><strong>Máy Thực Hiện:</strong> @Html.DisplayFor(model => model.MaThietBiHv)</p>
+                                    <p><strong>Mã Thiết Bị Nhà Sản Xuất:</strong> @Html.DisplayFor(model => model.MaThietBiNhaSx)</p>
+                                    <p><strong>Cấu Hình:</strong> @Html.DisplayFor(model => model.CauHinh)</p>
+                                    <p><strong>Vị Trí Đặt:</strong> @Html.DisplayFor(model => model.ViTriDat)</p>
+                                    <p><strong>Loại Thiết Bị:</strong> @Html.DisplayFor(model => model.IdLoaiThietBiNavigation.IdLoaiThietBi)</p>
+                                    <p><strong>Trạng Thái Thiết Bị:</strong> @Html.DisplayFor(model => model.IdTrangThaiThietBiNavigation.IdTrangThaiThietBi)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Các nút hành động -->
+    <div class="text-center mt-4">
+        <a asp-action="Edit" asp-route-id="@Model?.IdThietBi" class="btn btn-primary btn-lg me-2">
+            <i class="fas fa-edit"></i> Chỉnh Sửa
+        </a>
+        <a asp-action="Index" class="btn btn-outline-secondary btn-lg">
+            <i class="fas fa-arrow-left"></i> Quay Lại Danh Sách
+        </a>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdThietBi">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+<style>
+    /* Thêm logo vào góc trên bên trái */
+    .logo-container {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 999;
+    }
+
+    .logo-img {
+        width: 150px; /* Điều chỉnh kích thước của logo */
+        height: auto; /* Đảm bảo tỷ lệ giữ nguyên khi thay đổi kích thước */
+    }
+
+        /* Hiệu ứng hover cho logo */
+        .logo-img:hover {
+            transform: scale(1.1); /* Phóng to logo khi hover */
+            transition: all 0.3s ease;
+        }
+</style>
+      

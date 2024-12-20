@@ -3,6 +3,10 @@
 @{
     ViewData["Title"] = "Index";
 }
+<form method="post">
+    @Html.AntiForgeryToken()
+</form>
+
 
 <h1 style="text-align:center; color:darkred"><B>THIẾT BỊ</B></h1>
 <p class="text-end">
@@ -134,7 +138,10 @@
                         <a asp-action="Details" asp-route-id="@item.IdThietBi" class="btn btn-sm btn-info">
                             <i class="bi bi-info-circle"></i> Chi Tiết
                         </a>
-                        <a asp-action="Delete" asp-route-id="@item.IdThietBi" class="btn btn-sm btn-danger">
+                        <a asp-action="Delete" asp-route-id="@item.IdThietBi" class="btn btn-sm btn-danger"
+                           data-bs-toggle="modal"
+                           data-bs-target="#deleteModal"
+                           data-id="@item.IdThietBi">
                             <i class="bi bi-trash"></i> Xóa
                         </a>
                     </div>
@@ -143,8 +150,75 @@
 }
     </tbody>
 </table>
-<script>
+<!-- Modal Xác Nhận Xóa -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 16px; box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1); overflow: hidden; border: none;">
+            <div class="modal-header" style="background-color: #3498DB; color: white; padding: 20px 30px;">
+                <h5 class="modal-title" id="deleteModalLabel">
+                    <i class="bi bi-trash-fill" style="font-size: 1.7rem; margin-right: 10px;"></i>
+                    Xác Nhận Xóa
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="background-color: #ECF0F1; color: #333; font-size: 1.1rem; text-align: center; padding: 30px 20px;">
+                <p><strong>Bạn có chắc chắn muốn xóa thiết bị này không?</strong></p>
+                <p style="color: #888; font-size: 0.95rem;">Hành động này không thể hoàn tác.</p>
+            </div>
+            <div class="modal-footer" style="background-color: #ECF0F1; border-top: none; padding: 20px 30px; justify-content: center;">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"
+                        style="border-radius: 30px; padding: 10px 25px; font-weight: bold; font-size: 1rem; transition: 0.3s; border: 2px solid #3498DB;">
+                    Hủy
+                </button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteButton"
+                        style="border-radius: 30px; padding: 10px 25px; font-weight: bold; font-size: 1rem; background-color: #E74C3C; border: 2px solid #E74C3C; transition: 0.3s;">
+                    Xóa
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var deleteModal = document.getElementById('deleteModal');
+        var confirmDeleteButton = document.getElementById('confirmDeleteButton'); // Nút "Xóa" trong modal
+        var deleteId = null;
+
+        // Xử lý khi modal được hiển thị
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget; // Nút "Xóa" được nhấn
+            deleteId = button.getAttribute('data-id'); // Lấy ID thiết bị từ data-id
+        });
+
+        // Xử lý khi nhấn nút "Xóa" trong modal
+        confirmDeleteButton.addEventListener('click', function () {
+            if (deleteId) {
+                // Gửi request đến server để xóa
+                fetch(`/ThietBi/Delete/${deleteId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                    }
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            // Reload trang sau khi xóa thành công
+                            location.reload();
+                        } else {
+                            alert('Xóa thất bại. Vui lòng thử lại.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+        });
+    });
     new DataTable('#ntable', {
         searching: true, // Mặc định là true, set false để tắt chức năng search
         info: true, // Tắt thông tin về table VD: Showing 1 to 14 of 14 entries

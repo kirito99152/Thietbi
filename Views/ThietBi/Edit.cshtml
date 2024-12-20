@@ -1,83 +1,162 @@
-@model Thietbi.Models.TbThietBi
+﻿@model Thietbi.Models.TbThietBi
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Sửa Thông Tin";
 }
 
-<h1>Edit</h1>
+<h1 class="text-center my-4">Phòng Hậu Cần HVANND</h1>
 
-<h4>TbThietBi</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IdThietBi" />
-            <div class="form-group">
-                <label asp-for="IdNguoiSoHuu" class="control-label"></label>
-                <input asp-for="IdNguoiSoHuu" class="form-control" />
-                <span asp-validation-for="IdNguoiSoHuu" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdDonViSoHuu" class="control-label"></label>
-                <input asp-for="IdDonViSoHuu" class="form-control" />
-                <span asp-validation-for="IdDonViSoHuu" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdTrangThaiThietBi" class="control-label"></label>
-                <select asp-for="IdTrangThaiThietBi" class="form-control" asp-items="ViewBag.IdTrangThaiThietBi"></select>
-                <span asp-validation-for="IdTrangThaiThietBi" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdLoaiThietBi" class="control-label"></label>
-                <select asp-for="IdLoaiThietBi" class="form-control" asp-items="ViewBag.IdLoaiThietBi"></select>
-                <span asp-validation-for="IdLoaiThietBi" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NgayThemThietBi" class="control-label"></label>
-                <input asp-for="NgayThemThietBi" class="form-control" />
-                <span asp-validation-for="NgayThemThietBi" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TenThietBi" class="control-label"></label>
-                <input asp-for="TenThietBi" class="form-control" />
-                <span asp-validation-for="TenThietBi" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MoTa" class="control-label"></label>
-                <input asp-for="MoTa" class="form-control" />
-                <span asp-validation-for="MoTa" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaThietBiHv" class="control-label"></label>
-                <input asp-for="MaThietBiHv" class="form-control" />
-                <span asp-validation-for="MaThietBiHv" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaThietBiNhaSx" class="control-label"></label>
-                <input asp-for="MaThietBiNhaSx" class="form-control" />
-                <span asp-validation-for="MaThietBiNhaSx" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CauHinh" class="control-label"></label>
-                <input asp-for="CauHinh" class="form-control" />
-                <span asp-validation-for="CauHinh" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ViTriDat" class="control-label"></label>
-                <input asp-for="ViTriDat" class="form-control" />
-                <span asp-validation-for="ViTriDat" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+
+<div class="container mt-5">
+    <!-- Thêm hình ảnh Học viện An Ninh vào góc trên bên trái -->
+    <div style="position: relative;">
+        <img src="/images/Logo_hoc_vien_ANND.png" alt="Logo Học Viện An Ninh" class="logo-img"
+             style="position: absolute; top: -180px; left: 10px;" />
+    </div>
+    <h2 class="text-center mb-4">Sửa Thông Tin</h2>
+    <div class="card shadow-lg rounded-lg p-4">
+        <div class="card-body">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-4"></div>
+
+                <div class="row">
+                    <!-- Left Column -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="IdNguoiSoHuu" class="form-label"><i class="fas fa-user"></i> Người Sở Hữu</label>
+                            <input asp-for="IdNguoiSoHuu" class="form-control shadow-sm form-control-lg" />
+                            <span asp-validation-for="IdNguoiSoHuu" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="IdDonViSoHuu" class="form-label"><i class="fas fa-building"></i> Đơn Vị Sở Hữu</label>
+                            <input asp-for="IdDonViSoHuu" class="form-control shadow-sm form-control-lg" />
+                            <span asp-validation-for="IdDonViSoHuu" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="IdTrangThaiThietBi" class="form-label"><i class="fas fa-cogs"></i> Trạng Thái Thiết Bị</label>
+                            <select asp-for="IdTrangThaiThietBi" class="form-select shadow-sm form-select-lg" asp-items="ViewBag.IdTrangThaiThietBi"></select>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="IdLoaiThietBi" class="form-label"><i class="fas fa-list-alt"></i> Loại Thiết Bị</label>
+                            <select asp-for="IdLoaiThietBi" class="form-select shadow-sm form-select-lg" asp-items="ViewBag.IdLoaiThietBi"></select>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="NgayThemThietBi" class="form-label"><i class="fas fa-calendar-plus"></i> Ngày Thêm Thiết Bị</label>
+                            <input asp-for="NgayThemThietBi" class="form-control shadow-sm form-control-lg" />
+                            <span asp-validation-for="NgayThemThietBi" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="TenThietBi" class="form-label"><i class="fas fa-tools"></i> Tên Thiết Bị</label>
+                            <input asp-for="TenThietBi" class="form-control shadow-sm form-control-lg" />
+                            <span asp-validation-for="TenThietBi" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="MoTa" class="form-label"><i class="fas fa-info-circle"></i> Mô Tả</label>
+                            <textarea asp-for="MoTa" class="form-control shadow-sm form-control-lg"></textarea>
+                            <span asp-validation-for="MoTa" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="MaThietBiHv" class="form-label"><i class="fas fa-barcode"></i> Mã Thiết Bị Học Viện</label>
+                            <input asp-for="MaThietBiHv" class="form-control shadow-sm form-control-lg" />
+                            <span asp-validation-for="MaThietBiHv" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="MaThietBiNhaSx" class="form-label"><i class="fas fa-industry"></i> Mã Thiết Bị Nhà Sản Xuất</label>
+                            <input asp-for="MaThietBiNhaSx" class="form-control shadow-sm form-control-lg" />
+                            <span asp-validation-for="MaThietBiNhaSx" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="CauHinh" class="form-label"><i class="fas fa-cogs"></i> Cấu Hình</label>
+                            <input asp-for="CauHinh" class="form-control shadow-sm form-control-lg" />
+                            <span asp-validation-for="CauHinh" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ViTriDat" class="form-label"><i class="fas fa-map-marker-alt"></i> Vị Trí Đặt</label>
+                    <input asp-for="ViTriDat" class="form-control shadow-sm form-control-lg" />
+                    <span asp-validation-for="ViTriDat" class="text-danger"></span>
+                </div>
+
+                <div class="form-group text-center">
+
+                    <input type="submit" value="Lưu Thông Tin" class="btn btn-primary btn-lg" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a asp-action="Index" class="btn btn-outline-secondary"><i class="fas fa-arrow-left"></i> Quay lại danh sách</a>
     </div>
 </div>
+<style>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    /* Hiệu ứng hover cho nút */
+    .btn:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+        color: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        transform: scale(1.05);
+        transition: all 0.3s ease-in-out;
+    }
+
+    /* Hiệu ứng hover cho các trường nhập liệu */
+    .form-control:hover, .form-select:hover {
+        border-color: #0056b3;
+        background-color: #f0f8ff;
+        transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+    }
+
+    /* Hiệu ứng hover cho các biểu tượng */
+    i:hover {
+        color: #0056b3;
+        transform: scale(1.2);
+        transition: all 0.3s ease-in-out;
+    }
+
+    /* Hiệu ứng hover cho link */
+    a:hover {
+        color: #0056b3;
+        text-decoration: underline;
+        transition: color 0.3s ease, text-decoration 0.3s ease;
+    }
+
+    .card:hover {
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ khi hover */
+        transform: translateY(-5px); /* Di chuyển card lên khi hover */
+        transition: all 0.3s ease-in-out;
+    }
+    /* Thêm khoảng cách phía trên nút Tạo Mới */
+    .form-group.text-center {
+        margin-top: 30px; /* Điều chỉnh giá trị này theo nhu cầu */
+    }
+    /* Thêm logo vào góc trên bên trái */
+    .logo-container {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 999;
+    }
+
+    .logo-img {
+        width: 100px; /* Điều chỉnh kích thước của logo */
+        height: auto; /* Đảm bảo tỷ lệ giữ nguyên khi thay đổi kích thước */
+    }
+
+        /* Hiệu ứng hover cho logo */
+        .logo-img:hover {
+            transform: scale(1.1); /* Phóng to logo khi hover */
+            transition: all 0.3s ease;
+        }
+</style>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
