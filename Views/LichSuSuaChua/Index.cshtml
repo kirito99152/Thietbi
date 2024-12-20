@@ -3,267 +3,187 @@
 @{
     ViewData["Title"] = "Index";
 }
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 
 
-<h1 style="text-align:center; color:darkred"><B>LỊCH SỬ SỬA CHỮA</B></h1>
-<p class="text-end">
-    <a asp-action="Create" class="btn btn-success">
-        <i class="bi bi-plus-circle"></i> Tạo Lịch Sử Chỉnh Sửa Mới
-    </a>
-    <!-- Nút hiển thị modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#chartModal">
-        Hiển Thị Biểu Đồ
-    </button>
+<div class="container mt-4">
+    <!-- Card chính bao toàn bộ -->
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h2 class="text-center mb-0 fw-bold">LỊCH SỬ SỬA CHỮA</h2>
+        </div>
 
-</p>
-
-<!-- Modal -->
-<div class="modal fade" id="chartModal" tabindex="-1" role="dialog" aria-labelledby="chartModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="chartModalLabel">Biểu Đồ Cơ Cấu Tổ Chức</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <canvas id="repairChart" width="1200" height="600"></canvas>
+        <div class="card-body">
+            <!-- Bảng -->
+            <div class="table-responsive">
+                <table id="ntable" class="table table-bordered table-striped align-middle">
+                    <thead class="bg-light">
+                        <tr class="text-center">
+                            <th>STT</th>
+                                <th>
+                                    ID NGƯỜI BÁO
+                                </th>
+                                <th>
+                                    ID ĐƠN VỊ BÁO
+                                </th>
+                                 <th>
+                                   ID CÁN BỘ SỬA CHỮA
+                                 </th>
+                                <th>
+                                 ID ĐƠN VỊ SỬA CHỮA
+                                </th>
+                                <th>
+                                 THỜI GIAN BẮT ĐẦU
+                                </th>
+                                <th>
+                                 THỜI GIAN KẾT THÚC
+                                </th>
+                                <th>
+                                HIỆN TƯỢNG
+                                 </th>
+                                 <th>
+                                 NGUYÊN NHÂN XÁC ĐỊNH
+                                 </th>
+                                <th>
+                                 KẾT QUẢ SỬA CHỮA
+                                 </th>
+                                 <th>
+                                 THÔNG TIN SỬA CHỮA
+                                 </th>
+                                <th>
+                                CÁCH SỬA
+                                 </th>
+                                <th>
+                                THIẾT BỊ
+                                 </th>
+        <th></th>
+        </tr>
+        </thead>
+       <tbody>
+               @if (Model != null && Model.Any())
+                        {
+                            int stt = 0;
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="text-center">@(++stt)</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdNguoiBao)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdDonViBao)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdCanBoSua)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdDonViSua)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ThoiGianBatDau)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ThoiGianKetThuc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HienTuong)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NguyenNhanXacDinh)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.KetQuaSua)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ThongTinSuaChua)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CachSua)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdThietBiNavigation.TenThietBi)
+                    </td>
+                    <td class="text-center">
+                        <div class="btn-group" role="group">
+                            <a asp-action="Edit" asp-route-id="@item.IdLichSuSuaChua" class="btn btn-sm btn-primary">
+                                <i class="bi bi-pencil-square"></i> Sửa
+                            </a>
+                            <a asp-action="Details" asp-route-id="@item.IdLichSuSuaChua" class="btn btn-sm btn-info">
+                                <i class="bi bi-info-circle"></i> Chi Tiết
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.IdLichSuSuaChua" class="btn btn-sm btn-danger">
+                                <i class="bi bi-trash"></i> Xóa
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="9" class="text-center text-muted">
+                                    Không có dữ liệu để hiển thị.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
+<!-- CSS tùy chỉnh -->
 <style>
-    .modal-dialog {
-        max-width: 70%; /* Tăng chiều rộng của modal */
-    }
-
-    .modal-body {
-        height: 80vh; /* Chiều cao tương đối của nội dung modal */
-        overflow: auto;
-    }
-    /* Đặt viền đen cho bảng */
-    .table {
-        border: 3px solid black; /* Viền đen cho bảng */
-        border-radius: 10px; /* Bo góc cho bảng */
-        border-collapse: separate; /* Để bo góc không bị ảnh hưởng */
-    }
-
-        .table th, .table td {
-            border: 2px solid black; /* Thêm viền đen cho các ô tiêu đề và dữ liệu */
-            padding: 10px;
-            text-align: center;
-        }
-
-        .table th {
-            background-color: #4CAF50; /* Màu nền cho ô tiêu đề */
-            color: white; /* Màu chữ trắng cho ô tiêu đề */
-            text-align: center; /* Căn giữa nội dung */
-            font-weight: bold; /* Chữ đậm */
-        }
-
-        .table td {
-            background-color: #f9f9f9; /* Màu nền cho ô dữ liệu */
-            color: black; /* Màu chữ đen cho ô dữ liệu */
-            text-align: center; /* Căn giữa nội dung */
-        }
-
-        .table tbody tr:nth-child(odd) td {
-            background-color: #e6f7ff; /* Màu nền cho các ô dữ liệu ở hàng lẻ */
-        }
-
-        .table tbody tr:nth-child(even) td {
-            background-color: #fff2e6; /* Màu nền cho các ô dữ liệu ở hàng chẵn */
-        }
-
     body {
-        background: rgb(93, 173, 146);
-        
-        margin-bottom: 115pxbackground-color: #fff9e9;
-      
-        font-family: "IBM Plex Serif", serif;
-        font-weight: 500;
-        font-style: normal;
-        margin-bottom: 115px
+        background-color: #f7f9fc; /* Nền dịu nhẹ */
+    }
+
+    .card {
+        border-radius: 15px; /* Bo tròn góc */
+        overflow: hidden;
+    }
+
+    .card-header {
+        font-size: 1.5rem; /* Tiêu đề lớn */
+        text-transform: uppercase; /* Chữ in hoa */
+    }
+
+    .table {
+        border-radius: 10px; /* Bo tròn bảng */
+        overflow: hidden;
+    }
+
+        .table thead th {
+            text-transform: uppercase; /* Chữ in hoa trong header */
+            font-weight: bold;
+        }
+
+        .table tbody tr:hover {
+            background-color: #eef3f7; /* Hiệu ứng hover */
+        }
+
+    .btn {
+        font-size: 0.9rem; /* Kích thước nút */
     }
 </style>
-@{
-    int stt = 0;
-}
-<table id="ntable" class="table">
-    <thead>
-        <track style="text-align:center">
-    <th>STT</th>
-            <th>
-                ID NGƯỜI BÁO
-            </th>
-            <th>
-                ID ĐƠN VỊ BÁO
-            </th>
-            <th>
-                ID CÁN BỘ SỬA CHỮA
-            </th>
-            <th>
-                ID ĐƠN VỊ SỬA CHỮA
-            </th>
-            <th>
-                THỜI GIAN BẮT ĐẦU
-            </th>
-            <th>
-                THỜI GIAN KẾT THÚC
-            </th>
-            <th>
-                HIỆN TƯỢNG
-            </th>
-            <th>
-                NGUYÊN NHÂN XÁC ĐỊNH
-            </th>
-            <th>
-                KẾT QUẢ SỬA CHỮA
-            </th>
-            <th>
-                THÔNG TIN SỬA CHỮA
-            </th>
-            <th>
-                CÁCH SỬA
-            </th>
-            <th>
-                THIẾT BỊ
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>@(++stt)</td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdNguoiBao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdDonViBao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdCanBoSua)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdDonViSua)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThoiGianBatDau)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThoiGianKetThuc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HienTuong)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NguyenNhanXacDinh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.KetQuaSua)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThongTinSuaChua)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CachSua)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdThietBiNavigation.TenThietBi)
-            </td>
-                <td class="text-center">
-                    <div class="btn-group" role="group">
-                        <a asp-action="Edit" asp-route-id="@item.IdLichSuSuaChua" class="btn btn-sm btn-primary">
-                            <i class="bi bi-pencil-square"></i> Sửa
-                        </a>
-                        <a asp-action="Details" asp-route-id="@item.IdLichSuSuaChua" class="btn btn-sm btn-info">
-                            <i class="bi bi-info-circle"></i> Chi Tiết
-                        </a>
-                        <a asp-action="Delete" asp-route-id="@item.IdLichSuSuaChua" class="btn btn-sm btn-danger">
-                            <i class="bi bi-trash"></i> Xóa
-                        </a>
-                    </div>
-                </td>
-        </tr>
-}
-    </tbody>
-</table>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    async function fetchChartData() {
-        const response = await fetch('/LichSuSuaChua/ChartData');
-        if (!response.ok) {
-            console.error('Không thể lấy dữ liệu biểu đồ');
-            return null;
-        }
-        return await response.json();
-    }
 
-    async function renderChart() {
-        const chartData = await fetchChartData();
-        if (!chartData) return;
+    <script>
 
-        const ctx = document.getElementById('repairChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: chartData.labels,
-                datasets: [{
-                    label: 'Số lần sửa chữa',
-                    data: chartData.values,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
+        new DataTable('#ntable', {
+            searching: true, // Mặc định là true, set false để tắt chức năng search
+            info: true, // Tắt thông tin về table VD: Showing 1 to 14 of 14 entries
+            language: {
+                search: "Tìm kiếm",
+                lengthMenu: "Điều chỉnh số lượng bản ghi trên 1 trang _MENU_ ",
+                info: "Tổng cộng _TOTAL_ bản ghi",
+                zeroRecords: "không tìm thấy kết quả phù hợp",
+                emptyTable: "Không có dữ liệu",
+                paginate: {
+                    first: "Trang đầu",
+                    previous: "Trang trước",
+                    next: "Trang sau",
+                    last: "Trang cuối"
+                },
             },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
         });
-    }
-    renderChart();
-</script>
-<script>
-
-    new DataTable('#ntable', {
-        searching: true, // Mặc định là true, set false để tắt chức năng search
-        info: true, // Tắt thông tin về table VD: Showing 1 to 14 of 14 entries
-        language: {
-            search: "Tìm kiếm",
-            lengthMenu: "Điều chỉnh số lượng bản ghi trên 1 trang _MENU_ ",
-            info: "Tổng cộng _TOTAL_ bản ghi",
-            zeroRecords: "không tìm thấy kết quả phù hợp",
-            emptyTable: "Không có dữ liệu",
-            paginate: {
-                first: "Trang đầu",
-                previous: "Trang trước",
-                next: "Trang sau",
-                last: "Trang cuối"
-            },
-        },
-    });
-</script>
+    </script>

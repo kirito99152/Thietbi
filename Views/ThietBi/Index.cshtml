@@ -3,153 +3,88 @@
 @{
     ViewData["Title"] = "Index";
 }
-<form method="post">
-    @Html.AntiForgeryToken()
-</form>
+<div class="container mt-4">
+    <!-- Card bao quanh toàn bộ nội dung -->
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h2 class="text-center mb-0 fw-bold">DANH SÁCH THIẾT BỊ</h2>
+        </div>
 
+        <div class="card-body">
 
-<h1 style="text-align:center; color:darkred"><B>THIẾT BỊ</B></h1>
-<p class="text-end">
-    <a asp-action="Create" class="btn btn-success">
-        <i class="bi bi-plus-circle"></i> Tạo Văn Bản Mới
-    </a>
-</p>
+            <!-- Bảng danh sách thiết bị -->
+            <div class="table-responsive">
+                <table id="ntable" class="table table-bordered table-striped align-middle">
+                    <thead class="bg-light">
+                        <tr class="text-center">
+                            <th>STT</th>
+                            <th>ID NGƯỜI SỞ HỮU</th>
+                            <th>ID ĐƠN VỊ SỞ HỮU</th>
+                            <th>NGÀY THÊM</th>
+                            <th>TÊN THIẾT BỊ</th>
+                            <th>MÔ TẢ</th>
+                            <th>MÃ HV</th>
+                            <th>MÃ NHÀ SX</th>
+                            <th>CẤU HÌNH</th>
+                            <th>VỊ TRÍ ĐẶT</th>
+                            <th>LOẠI THIẾT BỊ</th>
+                            <th>TRẠNG THÁI</th>
+                            <th>THAO TÁC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            int stt = 0;
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="text-center">@(++stt)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.IdNguoiSoHuu)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.IdDonViSoHuu)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.NgayThemThietBi)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.TenThietBi)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.MoTa)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.MaThietBiHv)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.MaThietBiNhaSx)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.CauHinh)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.ViTriDat)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.IdLoaiThietBiNavigation.LoaiThietBi)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.IdTrangThaiThietBiNavigation.TrangThaiThietBi)</td>
+                                    <td class="text-center">
+                                        <div class="btn-group" role="group">
+                                            <a asp-action="Edit" asp-route-id="@item.IdThietBi" class="btn btn-sm btn-primary">
+                                                <i class="bi bi-pencil-square"></i> Sửa
+                                            </a>
+                                            <a asp-action="Details" asp-route-id="@item.IdThietBi" class="btn btn-sm btn-info">
+                                                <i class="bi bi-info-circle"></i> Chi Tiết
+                                            </a>
+                                            <a asp-action="Delete" asp-route-id="@item.IdThietBi" class="btn btn-sm btn-danger"
+                                               data-bs-toggle="modal"
+                                               data-bs-target="#deleteModal"
+                                               data-id="@item.IdThietBi">
+                                                <i class="bi bi-trash"></i> Xóa
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="13" class="text-center text-muted">
+                                    Không có dữ liệu để hiển thị.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
-<style>
- /* Đặt viền đen cho bảng */
-    .table {
-        border: 3px solid black; /* Viền đen cho bảng */
-        border-radius: 10px; /* Bo góc cho bảng */
-        border-collapse: separate; /* Để bo góc không bị ảnh hưởng */
-    }
-
-    .table th, .table td {
-            border: 2px solid black; /* Thêm viền đen cho các ô tiêu đề và dữ liệu */
-            padding: 10px;
-            text-align: center;
-    }
-    .table th {
-        background-color: #4CAF50; /* Màu nền cho ô tiêu đề */
-        color: white; /* Màu chữ trắng cho ô tiêu đề */
-        text-align: center; /* Căn giữa nội dung */
-        font-weight: bold; /* Chữ đậm */
-    }
-    .table td {
-        background-color: #f9f9f9; /* Màu nền cho ô dữ liệu */
-        color: black; /* Màu chữ đen cho ô dữ liệu */
-        text-align: center; /* Căn giữa nội dung */
-    }
-    .table tbody tr:nth-child(odd) td {
-        background-color: #e6f7ff; /* Màu nền cho các ô dữ liệu ở hàng lẻ */
-    }
-    .table tbody tr:nth-child(even) td {
-        background-color: #fff2e6; /* Màu nền cho các ô dữ liệu ở hàng chẵn */
-    }
-    body{
-        background: rgb(93, 173, 146);
-    }
-</style>
-
-@{
-    int stt = 0;
-}
-<table id="ntable" class="table">
-    <thead>
-        <track style="text-align:center">
-    <th>STT</th>
-            <th>
-                ID NGƯỜI SỞ HỮU
-            </th>
-            <th>
-                ID ĐƠN VỊ SỞ HỮU
-            </th>
-            <th>
-                NGÀY THÊM THIẾT BỊ
-            </th>
-            <th>
-                TÊN THIẾT BỊ
-            </th>
-            <th>
-                MÔ TẢ
-            </th>
-            <th>
-                MÃ THIẾT BỊ HV
-            </th>
-            <th>
-                MÃ THIẾT BỊ NHÀ XS
-            </th>
-            <th>
-                CẤU HÌNH
-            </th>
-            <th>
-                VỊ TRÍ ĐẶT
-            </th>
-            <th>
-                LOẠI THIẾT BỊ
-            </th>
-            <th>
-                TRẠNG THÁI THIẾT BỊ
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>@(++stt)</td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdNguoiSoHuu)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdDonViSoHuu)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgayThemThietBi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenThietBi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MoTa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaThietBiHv)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaThietBiNhaSx)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CauHinh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ViTriDat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdLoaiThietBiNavigation.LoaiThietBi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdTrangThaiThietBiNavigation.TrangThaiThietBi)
-            </td>
-                <td class="text-center">
-                    <div class="btn-group" role="group">
-                        <a asp-action="Edit" asp-route-id="@item.IdThietBi" class="btn btn-sm btn-primary">
-                            <i class="bi bi-pencil-square"></i> Sửa
-                        </a>
-                        <a asp-action="Details" asp-route-id="@item.IdThietBi" class="btn btn-sm btn-info">
-                            <i class="bi bi-info-circle"></i> Chi Tiết
-                        </a>
-                        <a asp-action="Delete" asp-route-id="@item.IdThietBi" class="btn btn-sm btn-danger"
-                           data-bs-toggle="modal"
-                           data-bs-target="#deleteModal"
-                           data-id="@item.IdThietBi">
-                            <i class="bi bi-trash"></i> Xóa
-                        </a>
-                    </div>
-                </td>
-        </tr>
-}
-    </tbody>
-</table>
 <!-- Modal Xác Nhận Xóa -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -179,25 +114,20 @@
     </div>
 </div>
 
-
-
-
+<!-- JavaScript -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var deleteModal = document.getElementById('deleteModal');
-        var confirmDeleteButton = document.getElementById('confirmDeleteButton'); // Nút "Xóa" trong modal
+        var confirmDeleteButton = document.getElementById('confirmDeleteButton'); 
         var deleteId = null;
 
-        // Xử lý khi modal được hiển thị
         deleteModal.addEventListener('show.bs.modal', function (event) {
-            var button = event.relatedTarget; // Nút "Xóa" được nhấn
-            deleteId = button.getAttribute('data-id'); // Lấy ID thiết bị từ data-id
+            var button = event.relatedTarget; 
+            deleteId = button.getAttribute('data-id'); 
         });
 
-        // Xử lý khi nhấn nút "Xóa" trong modal
         confirmDeleteButton.addEventListener('click', function () {
             if (deleteId) {
-                // Gửi request đến server để xóa
                 fetch(`/ThietBi/Delete/${deleteId}`, {
                     method: 'POST',
                     headers: {
@@ -207,7 +137,6 @@
                 })
                     .then(response => {
                         if (response.ok) {
-                            // Reload trang sau khi xóa thành công
                             location.reload();
                         } else {
                             alert('Xóa thất bại. Vui lòng thử lại.');
@@ -219,21 +148,23 @@
             }
         });
     });
+
     new DataTable('#ntable', {
-        searching: true, // Mặc định là true, set false để tắt chức năng search
-        info: true, // Tắt thông tin về table VD: Showing 1 to 14 of 14 entries
+        searching: true,
+        paging: true,
+        info: true,
         language: {
-            search: "Tìm kiếm",
-            lengthMenu: "Điều chỉnh số lượng bản ghi trên 1 trang _MENU_ ",
-            info: "Tổng cộng _TOTAL_ bản ghi",
-            zeroRecords: "không tìm thấy kết quả phù hợp",
-            emptyTable: "Không có dữ liệu",
+            search: "Tìm kiếm:",
+            lengthMenu: "Hiển thị _MENU_ bản ghi",
+            info: "Hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ bản ghi",
             paginate: {
-                first: "Trang đầu",
-                previous: "Trang trước",
-                next: "Trang sau",
-                last: "Trang cuối"
+                first: "Đầu",
+                previous: "Trước",
+                next: "Sau",
+                last: "Cuối"
             },
+            zeroRecords: "Không tìm thấy kết quả phù hợp",
+            emptyTable: "Không có dữ liệu để hiển thị",
         },
     });
 </script>
