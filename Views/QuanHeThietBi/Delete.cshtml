@@ -1,33 +1,70 @@
-@model Thietbi.Models.TbQuanHeThietBi
+﻿@model Thietbi.Models.TbQuanHeThietBi
 
 @{
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+<div class="container mt-5">
+    <!-- Thêm hình ảnh Học viện An Ninh vào góc trên bên trái -->
+    <div style="position: relative;">
+        <img src="/images/Logo_hoc_vien_ANND.png" alt="Logo Học Viện An Ninh" class="logo-img"
+             style="position: absolute; top: -70px; left: 10px;" />
+    </div>
+    <h1 class="text-center my-4">Xóa Thông Tin Quan Hệ Thiết Bị</h1>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>TbQuanHeThietBi</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdThietBiChaNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdThietBiChaNavigation.IdThietBi)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdThietBiConNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdThietBiConNavigation.IdThietBi)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="IdQuanHeThietBi" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+    <div class="card shadow-lg rounded-lg p-4">
+        <div class="card-body">
+            <!-- Thông tin chi tiết -->
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                            Thông Tin Quan Hệ Thiết Bị
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
+                            <p><strong>Thiết Bị Cha:</strong> @Html.DisplayFor(model => model.IdThietBiChaNavigation.IdThietBi)</p>
+                            <p><strong>Thiết Bị Con:</strong> @Html.DisplayFor(model => model.IdThietBiConNavigation.IdThietBi)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Xác nhận xóa -->
+            <div class="text-center mt-4">
+                <h3 class="text-danger">Bạn có chắc chắn muốn xóa thông tin này không?</h3>
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" asp-for="IdQuanHeThietBi" />
+                    <button type="submit" class="btn btn-danger btn-lg">
+                        <i class="fas fa-trash-alt"></i> Xóa
+                    </button> |
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-lg">
+                        <i class="fas fa-arrow-left"></i> Quay Lại Danh Sách
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+    /* Thêm logo vào góc trên bên trái */
+    .logo-container {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 999;
+    }
+
+    .logo-img {
+        width: 150px; /* Điều chỉnh kích thước của logo */
+        height: auto; /* Đảm bảo tỷ lệ giữ nguyên khi thay đổi kích thước */
+    }
+
+        /* Hiệu ứng hover cho logo */
+        .logo-img:hover {
+            transform: scale(1.1); /* Phóng to logo khi hover */
+            transition: all 0.3s ease;
+        }
+</style>

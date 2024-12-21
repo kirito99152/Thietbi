@@ -1,162 +1,78 @@
-@model Thietbi.Models.TbLichSuSuaChua
+﻿@model Thietbi.Models.TbLichSuSuaChua
 
 @{
     ViewData["Title"] = "Delete";
 }
-<head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        body {
-            background-color: #fff9e9;
-            color: #553f3a;
-            font-family: "IBM Plex Serif", serif;
-            font-weight: 500;
-            font-style: normal;
-            margin-bottom: 115px
-        }
 
-        .container {
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            width: 100%;
-            margin: auto;
-            background-color: #ccdee2;
-            margin-top: 20px;
-        }
+<div class="container mt-5">
+    <!-- Thêm hình ảnh Học viện An Ninh vào góc trên bên trái -->
+    <div style="position: relative;">
+        <img src="/images/Logo_hoc_vien_ANND.png" alt="Logo Học Viện An Ninh" class="logo-img"
+             style="position: absolute; top: -70px; left: 10px;" />
+    </div>
+    <h1 class="text-center my-4">Xóa Thông Tin Sửa Chữa</h1>
 
-        h1 {
-            color: #553f3a;
-            text-align: center;
-        }
+    <div class="card shadow-lg rounded-lg p-4">
+        <div class="card-body">
+            <!-- Thông tin chi tiết -->
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                            Thông Tin Sửa Chữa
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
+                            <p><strong>Người Báo:</strong> @Html.DisplayFor(model => model.IdNguoiBao)</p>
+                            <p><strong>Đơn Vị Báo:</strong> @Html.DisplayFor(model => model.IdDonViBao)</p>
+                            <p><strong>Cán Bộ Sửa:</strong> @Html.DisplayFor(model => model.IdCanBoSua)</p>
+                            <p><strong>Đơn Vị Sửa:</strong> @Html.DisplayFor(model => model.IdDonViSua)</p>
+                            <p><strong>Thời Gian Bắt Đầu:</strong> @Html.DisplayFor(model => model.ThoiGianBatDau)</p>
+                            <p><strong>Thời Gian Kết Thúc:</strong> @Html.DisplayFor(model => model.ThoiGianKetThuc)</p>
+                            <p><strong>Hiện Tượng:</strong> @Html.DisplayFor(model => model.HienTuong)</p>
+                            <p><strong>Nguyên Nhân Xác Định:</strong> @Html.DisplayFor(model => model.NguyenNhanXacDinh)</p>
+                            <p><strong>Kết Quả Sửa:</strong> @Html.DisplayFor(model => model.KetQuaSua)</p>
+                            <p><strong>Thông Tin Sửa Chữa:</strong> @Html.DisplayFor(model => model.ThongTinSuaChua)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        /* Khung vu�ng cho t?ng th�ng tin thi?t b? */
-        .dl-box {
-            border: 1px solid #4b9ab4;
-            border-radius: 5px;
-            padding: 15px;
-            margin-bottom: 10px;
-            background-color: #ffffff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+            <!-- Xác nhận xóa -->
+            <div class="text-center mt-4">
+                <h3 class="text-danger">Bạn có chắc chắn muốn xóa thông tin này không?</h3>
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" asp-for="IdLichSuSuaChua" />
+                    <button type="submit" class="btn btn-danger btn-lg">
+                        <i class="fas fa-trash-alt"></i> Xóa
+                    </button> |
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-lg">
+                        <i class="fas fa-arrow-left"></i> Quay Lại Danh Sách
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
-            /* ??nh d?ng h�ng trong khung */
-            .dl-box dt {
-                font-weight: bold;
-                color: #553f3a;
-            }
+<style>
+    /* Thêm logo vào góc trên bên trái */
+    .logo-container {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 999;
+    }
 
-            .dl-box dd {
-                margin-bottom: 10px;
-                font-size: 16px;
-                color: #553f3a;
-            }
+    .logo-img {
+        width: 150px; /* Điều chỉnh kích thước của logo */
+        height: auto; /* Đảm bảo tỷ lệ giữ nguyên khi thay đổi kích thước */
+    }
 
-        /* C?n ch?nh n�t */
-        .btn-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .btn-custom {
-            padding: 10px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 5px;
+        /* Hiệu ứng hover cho logo */
+        .logo-img:hover {
+            transform: scale(1.1); /* Phóng to logo khi hover */
             transition: all 0.3s ease;
         }
-
-            .btn-custom:hover {
-                background-color: #357d9e;
-                color: #ffffff;
-            }
-
-        .btn-back {
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: bold;
-            padding: 10px 20px;
-            border: 1px solid #4b9ab4;
-            border-radius: 5px;
-            background-color: transparent;
-            color: #4b9ab4;
-            transition: all 0.3s ease;
-        }
-
-            .btn-back:hover {
-                background-color: #4b9ab4;
-                color: #ffffff;
-                transform: scale(1.05);
-            }
-    </style>
-</head>
-
-
-<h1>X�a Th�ng Tin S?a Ch?a</h1>
-
-<h3>B?n c� mu?n x�a th�ng tin s?a ch?a n�y kh�ng ?</h3>
-<hr />
-
-<div class="dl-box">
-    <dt>@Html.DisplayNameFor(model => model.IdNguoiBao)</dt>
-    <dd>@Html.DisplayFor(model => model.IdNguoiBao)</dd>
-</div>
-
-<div class="dl-box">
-    <dt>@Html.DisplayNameFor(model => model.IdDonViBao)</dt>
-    <dd>@Html.DisplayFor(model => model.IdDonViBao)</dd>
-</div>
-
-<div class="dl-box">
-    <dt>@Html.DisplayNameFor(model => model.IdCanBoSua)</dt>
-    <dd>@Html.DisplayFor(model => model.IdCanBoSua)</dd>
-</div>
-
-<div class="dl-box">
-    <dt>@Html.DisplayNameFor(model => model.IdDonViSua)</dt>
-    <dd>@Html.DisplayFor(model => model.IdDonViSua)</dd>
-</div>
-
-<div class="dl-box">
-    <dt>@Html.DisplayNameFor(model => model.ThoiGianBatDau)</dt>
-    <dd>@Html.DisplayFor(model => model.ThoiGianBatDau)</dd>
-</div>
-
-<div class="dl-box">
-    <dt>@Html.DisplayNameFor(model => model.ThoiGianKetThuc)</dt>
-    <dd>@Html.DisplayFor(model => model.ThoiGianKetThuc)</dd>
-</div>
-
-<div class="dl-box">
-    <dt>@Html.DisplayNameFor(model => model.HienTuong)</dt>
-    <dd>@Html.DisplayFor(model => model.HienTuong)</dd>
-</div>
-
-<div class="dl-box">
-    <dt>@Html.DisplayNameFor(model => model.NguyenNhanXacDinh)</dt>
-    <dd>@Html.DisplayFor(model => model.NguyenNhanXacDinh)</dd>
-</div>
-
-<div class="dl-box">
-    <dt>@Html.DisplayNameFor(model => model.KetQuaSua)</dt>
-    <dd>@Html.DisplayFor(model => model.KetQuaSua)</dd>
-</div>
-
-<div class="dl-box">
-    <dt>@Html.DisplayNameFor(model => model.ThongTinSuaChua)</dt>
-    <dd>@Html.DisplayFor(model => model.ThongTinSuaChua)</dd>
-</div>
-
-<form asp-action="Delete" class="text-center">
-    <input type="hidden" asp-for="IdLichSuSuaChua" />
-    <input type="submit" value="X�a" class="btn btn-danger" />
-    <a asp-action="Index" class="btn btn-back">Quay l?i danh s�ch</a>
-</form>
-</div>
-
+</style>

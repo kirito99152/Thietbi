@@ -1,39 +1,79 @@
-@model Thietbi.Models.TbQuanHeThietBi
+﻿@model Thietbi.Models.TbQuanHeThietBi
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Chỉnh Sửa Quan Hệ Thiết Bị</h1>
 
-<h4>TbQuanHeThietBi</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="col-md-6">
+        <form asp-action="Edit" class="form-edit">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
             <input type="hidden" asp-for="IdQuanHeThietBi" />
+
             <div class="form-group">
                 <label asp-for="IdThietBiCha" class="control-label"></label>
                 <select asp-for="IdThietBiCha" class="form-control" asp-items="ViewBag.IdThietBiCha"></select>
                 <span asp-validation-for="IdThietBiCha" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="IdThietBiCon" class="control-label"></label>
                 <select asp-for="IdThietBiCon" class="form-control" asp-items="ViewBag.IdThietBiCon"></select>
                 <span asp-validation-for="IdThietBiCon" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+
+            <div class="form-group text-center">
+                <input type="submit" value="Lưu" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
+
+<style>
+    .form-edit {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .btn {
+        margin-right: 10px;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+    }
+
+    .btn:hover {
+        opacity: 0.9;
+    }
+
+    .text-danger {
+        font-size: 0.9em;
+    }
+
+    .alert {
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+</style>

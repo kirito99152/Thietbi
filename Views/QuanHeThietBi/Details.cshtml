@@ -1,30 +1,82 @@
-@model Thietbi.Models.TbQuanHeThietBi
+﻿@model Thietbi.Models.TbQuanHeThietBi
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Chi Tiết Quan Hệ Thiết Bị";
 }
 
-<h1>Details</h1>
+<div class="container mt-5">
+    <!-- Thêm hình ảnh Học viện An Ninh vào góc trên bên trái -->
+    <div style="position: relative;">
+        <img src="/images/Logo_hoc_vien_ANND.png" alt="Logo Học Viện An Ninh" class="logo-img"
+             style="position: absolute; top: -70px; left: 10px;" />
+    </div>
+    <h1 class="text-center my-4">Thông Tin Quan Hệ Thiết Bị</h1>
 
-<div>
-    <h4>TbQuanHeThietBi</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdThietBiChaNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdThietBiChaNavigation.IdThietBi)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdThietBiConNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdThietBiConNavigation.IdThietBi)
-        </dd>
-    </dl>
+    <div class="card shadow-lg rounded-lg p-4">
+        <div class="card-body">
+            <!-- Thông tin chung và chi tiết gộp lại thành một phần -->
+            <div class="accordion" id="accordionExample">
+                <!-- Thông tin thiết bị cha -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                            Thông Tin Thiết Bị Cha
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
+                            <p><strong>Mã Thiết Bị Cha:</strong> @Html.DisplayFor(model => model.IdThietBiChaNavigation.IdThietBi)</p>
+                            <p><strong>Tên Thiết Bị Cha:</strong> @Html.DisplayFor(model => model.IdThietBiChaNavigation.TenThietBi)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thông tin thiết bị con -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                            Thông Tin Thiết Bị Con
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
+                            <p><strong>Mã Thiết Bị Con:</strong> @Html.DisplayFor(model => model.IdThietBiConNavigation.IdThietBi)</p>
+                            <p><strong>Tên Thiết Bị Con:</strong> @Html.DisplayFor(model => model.IdThietBiConNavigation.TenThietBi)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Các nút hành động -->
+    <div class="text-center mt-4">
+        <a asp-action="Edit" asp-route-id="@Model?.IdQuanHeThietBi" class="btn btn-primary btn-lg me-2">
+            <i class="fas fa-edit"></i> Chỉnh Sửa
+        </a>
+        <a asp-action="Index" class="btn btn-outline-secondary btn-lg">
+            <i class="fas fa-arrow-left"></i> Quay Lại Danh Sách
+        </a>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdQuanHeThietBi">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+<style>
+    /* Thêm logo vào góc trên bên trái */
+    .logo-container {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 999;
+    }
+
+    .logo-img {
+        width: 150px; /* Điều chỉnh kích thước của logo */
+        height: auto; /* Đảm bảo tỷ lệ giữ nguyên khi thay đổi kích thước */
+    }
+
+        /* Hiệu ứng hover cho logo */
+        .logo-img:hover {
+            transform: scale(1.1); /* Phóng to logo khi hover */
+            transition: all 0.3s ease;
+        }
+</style>

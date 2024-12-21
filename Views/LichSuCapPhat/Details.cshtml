@@ -1,60 +1,95 @@
-@model Thietbi.Models.TbLichSuCapPhat
+﻿@model Thietbi.Models.TbLichSuCapPhat
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Chi Tiết Lịch Sử Cấp Phát";
 }
 
-<h1>Details</h1>
+<div class="container mt-5">
+    <!-- Thêm hình ảnh Học viện An Ninh vào góc trên bên trái -->
+    <div style="position: relative;">
+        <img src="/images/Logo_hoc_vien_ANND.png" alt="Logo Học Viện An Ninh" class="logo-img"
+             style="position: absolute; top: -70px; left: 10px;" />
+    </div>
+    <h1 class="text-center my-4">Chi Tiết Lịch Sử Cấp Phát</h1>
 
-<div>
-    <h4>TbLichSuCapPhat</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdNguoiDuocGiao)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdNguoiDuocGiao)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdDonViDuocGiao)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdDonViDuocGiao)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdNguoiCapPhat)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdNguoiCapPhat)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThoiGianCapPhat)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThoiGianCapPhat)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThoiGianThuHoi)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThoiGianThuHoi)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GhiChu)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GhiChu)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdThietBiNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdThietBiNavigation.IdThietBi)
-        </dd>
-    </dl>
+    <div class="card shadow-lg rounded-lg p-4">
+        <div class="card-body">
+            <!-- Tab Navigation -->
+            <ul class="nav nav-tabs" id="tabContent">
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#general">Thông Tin Chung</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#details">Chi Tiết Cấp Phát</a>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content mt-4">
+                <!-- Thông Tin Chung Tab -->
+                <div class="tab-pane fade show active" id="general">
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                                    Thông Tin Tổng Quan
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show">
+                                <div class="accordion-body">
+                                    <p><strong>ID Thiết Bị:</strong> @Html.DisplayFor(model => model.IdThietBiNavigation.IdThietBi)</p>
+                                    <p><strong>Người Cấp Phát:</strong> @Html.DisplayFor(model => model.IdNguoiCapPhat)</p>
+                                    <p><strong>Người Được Giao:</strong> @Html.DisplayFor(model => model.IdNguoiDuocGiao)</p>
+                                    <p><strong>Đơn Vị Được Giao:</strong> @Html.DisplayFor(model => model.IdDonViDuocGiao)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chi Tiết Cấp Phát Tab -->
+                <div class="tab-pane fade" id="details">
+                    <div class="accordion" id="accordionExample2">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                                    Thông Tin Chi Tiết
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <p><strong>Thời Gian Cấp Phát:</strong> @Html.DisplayFor(model => model.ThoiGianCapPhat)</p>
+                                    <p><strong>Thời Gian Thu Hồi:</strong> @Html.DisplayFor(model => model.ThoiGianThuHoi)</p>
+                                    <p><strong>Ghi Chú:</strong> @Html.DisplayFor(model => model.GhiChu)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Các nút hành động -->
+    <div class="text-center mt-4">
+        <a asp-action="Edit" asp-route-id="@Model?.IdLichSuCapPhat" class="btn btn-primary btn-lg me-2">
+            <i class="fas fa-edit"></i> Chỉnh Sửa
+        </a>
+        <a asp-action="Index" class="btn btn-outline-secondary btn-lg">
+            <i class="fas fa-arrow-left"></i> Quay Lại Danh Sách
+        </a>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdLichSuCapPhat">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+<style>
+    .logo-img {
+        width: 150px;
+        height: auto;
+    }
+
+        .logo-img:hover {
+            transform: scale(1.1);
+            transition: all 0.3s ease;
+        }
+</style>
