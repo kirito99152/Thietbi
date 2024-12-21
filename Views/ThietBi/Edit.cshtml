@@ -5,7 +5,6 @@
 }
 
 <h1 class="text-center my-4">Phòng Hậu Cần HVANND</h1>
-
 <hr />
 
 <div class="container mt-5">
@@ -17,7 +16,11 @@
     <h2 class="text-center mb-4">Sửa Thông Tin</h2>
     <div class="card shadow-lg rounded-lg p-4">
         <div class="card-body">
-            <form asp-action="Create">
+            <form asp-action="Edit">
+                <!-- Trường ẩn để gửi ID của thiết bị -->
+                <input type="hidden" asp-for="IdThietBi" />
+
+                <!-- Hiển thị lỗi xác thực -->
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-4"></div>
 
                 <div class="row">
@@ -85,79 +88,79 @@
                 </div>
 
                 <div class="form-group text-center">
-
                     <input type="submit" value="Lưu Thông Tin" class="btn btn-primary btn-lg" />
                 </div>
             </form>
         </div>
     </div>
+    <style>
+        /* Hiệu ứng hover cho nút */
+        .btn:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+            color: white;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transform: scale(1.05);
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Hiệu ứng hover cho các trường nhập liệu */
+        .form-control:hover, .form-select:hover {
+            border-color: #0056b3;
+            background-color: #f0f8ff;
+            transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+        }
+
+        /* Hiệu ứng hover cho các biểu tượng */
+        i:hover {
+            color: #0056b3;
+            transform: scale(1.2);
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Hiệu ứng hover cho link */
+        a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+            transition: color 0.3s ease, text-decoration 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ khi hover */
+            transform: translateY(-5px); /* Di chuyển card lên khi hover */
+            transition: all 0.3s ease-in-out;
+        }
+
+        .form-group.text-center {
+            margin-top: 30px; /* Điều chỉnh giá trị này theo nhu cầu */
+        }
+
+        /* Thêm logo vào góc trên bên trái */
+        .logo-container {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 999;
+        }
+
+        .logo-img {
+            width: 100px; /* Điều chỉnh kích thước của logo */
+            height: auto; /* Đảm bảo tỷ lệ giữ nguyên khi thay đổi kích thước */
+        }
+
+            /* Hiệu ứng hover cho logo */
+            .logo-img:hover {
+                transform: scale(1.1); /* Phóng to logo khi hover */
+                transition: all 0.3s ease;
+            }
+    </style>
 
     <div class="text-center mt-4">
         <a asp-action="Index" class="btn btn-outline-secondary"><i class="fas fa-arrow-left"></i> Quay lại danh sách</a>
     </div>
 </div>
-<style>
-
-    /* Hiệu ứng hover cho nút */
-    .btn:hover {
-        background-color: #0056b3;
-        border-color: #0056b3;
-        color: white;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        transform: scale(1.05);
-        transition: all 0.3s ease-in-out;
-    }
-
-    /* Hiệu ứng hover cho các trường nhập liệu */
-    .form-control:hover, .form-select:hover {
-        border-color: #0056b3;
-        background-color: #f0f8ff;
-        transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
-    }
-
-    /* Hiệu ứng hover cho các biểu tượng */
-    i:hover {
-        color: #0056b3;
-        transform: scale(1.2);
-        transition: all 0.3s ease-in-out;
-    }
-
-    /* Hiệu ứng hover cho link */
-    a:hover {
-        color: #0056b3;
-        text-decoration: underline;
-        transition: color 0.3s ease, text-decoration 0.3s ease;
-    }
-
-    .card:hover {
-        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ khi hover */
-        transform: translateY(-5px); /* Di chuyển card lên khi hover */
-        transition: all 0.3s ease-in-out;
-    }
-    /* Thêm khoảng cách phía trên nút Tạo Mới */
-    .form-group.text-center {
-        margin-top: 30px; /* Điều chỉnh giá trị này theo nhu cầu */
-    }
-    /* Thêm logo vào góc trên bên trái */
-    .logo-container {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        z-index: 999;
-    }
-
-    .logo-img {
-        width: 100px; /* Điều chỉnh kích thước của logo */
-        height: auto; /* Đảm bảo tỷ lệ giữ nguyên khi thay đổi kích thước */
-    }
-
-        /* Hiệu ứng hover cho logo */
-        .logo-img:hover {
-            transform: scale(1.1); /* Phóng to logo khi hover */
-            transition: all 0.3s ease;
-        }
-</style>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
