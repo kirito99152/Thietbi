@@ -181,10 +181,10 @@ namespace Thietbi.Controllers
             if (tbThietBi != null)
             {
                 _context.TbThietBis.Remove(tbThietBi);
-                await _context.SaveChangesAsync();
-                return Json(new { success = true });
             }
-            return Json(new { success = false });
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         private bool TbThietBiExists(int id)

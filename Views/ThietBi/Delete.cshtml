@@ -1,0 +1,79 @@
+﻿@model Thietbi.Models.TbThietBi
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="container mt-5">
+    <!-- Thêm hình ảnh Học viện An Ninh vào góc trên bên trái -->
+    <div style="position: relative;">
+        <img src="/images/Logo_hoc_vien_ANND.png" alt="Logo Học Viện An Ninh" class="logo-img"
+             style="position: absolute; top: -70px; left: 10px;" />
+    </div>
+    <h1 class="text-center my-4">Xóa Thông Tin Thiết Bị</h1>
+
+    <div class="card shadow-lg rounded-lg p-4">
+        <div class="card-body">
+            <!-- Thông tin chi tiết -->
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                            Thông Tin Thiết Bị
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
+                            <p><strong>Người Sở Hữu:</strong> @Html.DisplayFor(model => model.IdNguoiSoHuu)</p>
+                            <p><strong>Đơn Vị Sở Hữu:</strong> @Html.DisplayFor(model => model.IdDonViSoHuu)</p>
+                            <p><strong>Ngày Thêm Thiết Bị:</strong> @Html.DisplayFor(model => model.NgayThemThietBi)</p>
+                            <p><strong>Tên Thiết Bị:</strong> @Html.DisplayFor(model => model.TenThietBi)</p>
+                            <p><strong>Mô Tả:</strong> @Html.DisplayFor(model => model.MoTa)</p>
+                            <p><strong>Mã HV:</strong> @Html.DisplayFor(model => model.MaThietBiHv)</p>
+                            <p><strong>Mã Nhà SX:</strong> @Html.DisplayFor(model => model.MaThietBiNhaSx)</p>
+                            <p><strong>Cấu Hình:</strong> @Html.DisplayFor(model => model.CauHinh)</p>
+                            <p><strong>Vị Trí Đặt:</strong> @Html.DisplayFor(model => model.ViTriDat)</p>
+                            <p><strong>Loại Thiết Bị:</strong> @Html.DisplayFor(model => model.IdLoaiThietBiNavigation.LoaiThietBi)</p>
+                            <p><strong>Trạng Thái Thiết Bị:</strong> @Html.DisplayFor(model => model.IdTrangThaiThietBiNavigation.TrangThaiThietBi)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Xác nhận xóa -->
+            <div class="text-center mt-4">
+                <h3 class="text-danger">Bạn có chắc chắn muốn xóa thông tin này không?</h3>
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" asp-for="IdThietBi" />
+                    <button type="submit" class="btn btn-danger btn-lg">
+                        <i class="fas fa-trash-alt"></i> Xóa
+                    </button> |
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-lg">
+                        <i class="fas fa-arrow-left"></i> Quay Lại Danh Sách
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Thêm logo vào góc trên bên trái */
+    .logo-container {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 999;
+    }
+
+    .logo-img {
+        width: 150px; /* Điều chỉnh kích thước của logo */
+        height: auto; /* Đảm bảo tỷ lệ giữ nguyên khi thay đổi kích thước */
+    }
+
+    /* Hiệu ứng hover cho logo */
+    .logo-img:hover {
+        transform: scale(1.1); /* Phóng to logo khi hover */
+        transition: all 0.3s ease;
+    }
+</style>

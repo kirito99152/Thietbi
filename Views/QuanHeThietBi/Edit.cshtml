@@ -1,79 +1,119 @@
 ﻿@model Thietbi.Models.TbQuanHeThietBi
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Chỉnh Sửa Quan Hệ Thiết Bị";
 }
 
-<h1>Chỉnh Sửa Quan Hệ Thiết Bị</h1>
+<h1 class="text-center my-4">Phòng Hậu Cần HVANND</h1>
 
-<div class="row">
-    <div class="col-md-6">
-        <form asp-action="Edit" class="form-edit">
-            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
-            <input type="hidden" asp-for="IdQuanHeThietBi" />
+<hr />
 
-            <div class="form-group">
-                <label asp-for="IdThietBiCha" class="control-label"></label>
-                <select asp-for="IdThietBiCha" class="form-control" asp-items="ViewBag.IdThietBiCha"></select>
-                <span asp-validation-for="IdThietBiCha" class="text-danger"></span>
-            </div>
+<div class="container mt-5">
+    <!-- Thêm hình ảnh Học viện An Ninh vào góc trên bên trái -->
+    <div style="position: relative;">
+        <img src="/images/Logo_hoc_vien_ANND.png" alt="Logo Học Viện An Ninh" class="logo-img"
+             style="position: absolute; top: -180px; left: 10px;" />
+    </div>
+    <h2 class="text-center mb-4">Chỉnh Sửa Quan Hệ Thiết Bị</h2>
+    <div class="card shadow-lg rounded-lg p-4">
+        <div class="card-body">
+            <form asp-action="Edit" class="form-edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-4"></div>
+                <input type="hidden" asp-for="IdQuanHeThietBi" />
 
-            <div class="form-group">
-                <label asp-for="IdThietBiCon" class="control-label"></label>
-                <select asp-for="IdThietBiCon" class="form-control" asp-items="ViewBag.IdThietBiCon"></select>
-                <span asp-validation-for="IdThietBiCon" class="text-danger"></span>
-            </div>
+                <div class="row">
+                    <!-- Left Column -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="IdThietBiCha" class="form-label"><i class="fas fa-network-wired"></i> Thiết Bị Cha</label>
+                            <select asp-for="IdThietBiCha" class="form-select shadow-sm form-select-lg" asp-items="ViewBag.IdThietBiCha"></select>
+                            <span asp-validation-for="IdThietBiCha" class="text-danger"></span>
+                        </div>
+                    </div>
 
-            <div class="form-group text-center">
-                <input type="submit" value="Lưu" class="btn btn-success" />
-                <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
-            </div>
-        </form>
+                    <!-- Right Column -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="IdThietBiCon" class="form-label"><i class="fas fa-network-wired"></i> Thiết Bị Con</label>
+                            <select asp-for="IdThietBiCon" class="form-select shadow-sm form-select-lg" asp-items="ViewBag.IdThietBiCon"></select>
+                            <span asp-validation-for="IdThietBiCon" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group text-center mt-4">
+                    <input type="submit" value="Lưu" class="btn btn-primary btn-lg" />
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-lg"><i class="fas fa-arrow-left"></i> Quay lại danh sách</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
+
+<style>
+    /* Hiệu ứng hover cho nút */
+    .btn:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+        color: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        transform: scale(1.05);
+        transition: all 0.3s ease-in-out;
+    }
+
+    /* Hiệu ứng hover cho các trường nhập liệu */
+    .form-control:hover, .form-select:hover {
+        border-color: #0056b3;
+        background-color: #f0f8ff;
+        transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+    }
+
+    /* Hiệu ứng hover cho các biểu tượng */
+    i:hover {
+        color: #0056b3;
+        transform: scale(1.2);
+        transition: all 0.3s ease-in-out;
+    }
+
+    /* Hiệu ứng hover cho link */
+    a:hover {
+        color: #0056b3;
+        text-decoration: underline;
+        transition: color 0.3s ease, text-decoration 0.3s ease;
+    }
+
+    .card:hover {
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ khi hover */
+        transform: translateY(-5px); /* Di chuyển card lên khi hover */
+        transition: all 0.3s ease-in-out;
+    }
+
+    .form-group.text-center {
+        margin-top: 30px; /* Điều chỉnh giá trị này theo nhu cầu */
+    }
+
+    /* Thêm logo vào góc trên bên trái */
+    .logo-container {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 999;
+    }
+
+    .logo-img {
+        width: 100px; /* Điều chỉnh kích thước của logo */
+        height: auto; /* Đảm bảo tỷ lệ giữ nguyên khi thay đổi kích thước */
+    }
+
+        /* Hiệu ứng hover cho logo */
+        .logo-img:hover {
+            transform: scale(1.1); /* Phóng to logo khi hover */
+            transition: all 0.3s ease;
+        }
+</style>
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
-
-<style>
-    .form-edit {
-        background-color: #f9f9f9;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-    .btn {
-        margin-right: 10px;
-    }
-
-    .btn-success {
-        background-color: #28a745;
-        border: none;
-    }
-
-    .btn-secondary {
-        background-color: #6c757d;
-        border: none;
-    }
-
-    .btn:hover {
-        opacity: 0.9;
-    }
-
-    .text-danger {
-        font-size: 0.9em;
-    }
-
-    .alert {
-        padding: 10px;
-        margin-bottom: 20px;
-    }
-</style>
