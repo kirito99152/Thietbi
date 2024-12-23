@@ -5,6 +5,18 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="Views\QuanHeThietBi\Create.cshtml" />
+    <None Include="Views\QuanHeThietBi\Delete.cshtml" />
+    <None Include="Views\QuanHeThietBi\Details.cshtml" />
+    <None Include="Views\QuanHeThietBi\Edit.cshtml" />
+    <None Include="Views\QuanHeThietBi\Index.cshtml" />
+    <None Include="Views\ThietBi\Create.cshtml" />
+    <None Include="Views\ThietBi\Delete.cshtml" />
+    <None Include="Views\ThietBi\Details.cshtml" />
+    <None Include="Views\ThietBi\Edit.cshtml" />
+    <None Include="Views\ThietBi\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="EPPlus" Version="7.5.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

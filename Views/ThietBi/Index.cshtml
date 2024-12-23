@@ -11,7 +11,31 @@
             <a class="btn btn-success btn-sm fw-bold text-uppercase" asp-action="ExportToExcel">
                 <i class="bi bi-file-earmark-excel"></i> Xuất Excel
             </a>
+            <button class="btn btn-primary" onclick="showChart()">Hiển thị biểu đồ</button>
+            
         </div>
+        <form asp-action="ImportFromExcel" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="excelFile">Chọn file Excel:</label>
+                <input type="file" id="excelFile" name="excelFile" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary">Import</button>
+        </form>
+        <!-- Modal hiển thị biểu đồ -->
+        <div class="modal fade" id="chartModal" tabindex="-1" aria-labelledby="chartModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="chartModalLabel">Biểu đồ thống kê thiết bị</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <canvas id="deviceChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <div class="card-body">
 
@@ -108,4 +132,78 @@
             emptyTable: "Không có dữ liệu để hiển thị",
         },
     });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Hàm lấy dữ liệu từ server
+    async function fetchChartData() {
+        const response = await fetch('/ThietBi/GetChartData');
+        const data = await response.json();
+        return data;
+    }
+
+    let chartInstance; // Biến lưu trữ instance của Chart.js
+
+    // Hàm render biểu đồ
+    async function renderChart() {
+        const chartData = await fetchChartData();
+        const labels = chartData.map(item => item.loaiThietBi);
+        const data = chartData.map(item => item.soLuong);
+
+        const ctx = document.getElementById('deviceChart').getContext('2d');
+
+        // Nếu đã có instance của biểu đồ, hủy trước khi tạo lại
+        if (chartInstance) {
+            chartInstance.destroy();
+        }
+
+        chartInstance = new Chart(ctx, {
+            type: 'bar', // Loại biểu đồ: bar, line, pie, etc.
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Số Lượng Thiết Bị',
+                    data: data,
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(153, 102, 255, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(153, 102, 255, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    // Hàm hiển thị modal và render biểu đồ
+    function showChart() {
+        const modal = new bootstrap.Modal(document.getElementById('chartModal'));
+        modal.show();
+
+        // Đợi modal hiển thị hoàn toàn mới render biểu đồ
+        document.getElementById('chartModal').addEventListener('shown.bs.modal', renderChart, { once: true });
+    }
 </script>

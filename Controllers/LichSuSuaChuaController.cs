@@ -367,6 +367,19 @@ namespace Thietbi.Controllers
                 return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> GetChartData()
+        {
+            var chartData = await _context.TbLichSuSuaChuas
+                .GroupBy(t => t.IdThietBiNavigation.TenThietBi)
+                .Select(g => new
+                {
+                    LoaiThietBi = g.Key,
+                    SoLuong = g.Count()
+                }).ToListAsync();
+
+            return Json(chartData);
+        }
         private bool TbLichSuSuaChuaExists(int id)
         {
             return _context.TbLichSuSuaChuas.Any(e => e.IdLichSuSuaChua == id);

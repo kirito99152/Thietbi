@@ -204,7 +204,7 @@ namespace Thietbi.Controllers
                 var worksheet = package.Workbook.Worksheets.Add("Danh sách thiết bị");
 
                 // Hợp nhất và đặt tiêu đề lớn
-                worksheet.Cells[1, 1, 1, 8].Merge = true;
+                worksheet.Cells[1, 1, 1, 12].Merge = true;
                 worksheet.Cells[1, 1].Value = "Báo cáo danh sách thiết bị";
                 worksheet.Cells[1, 1].Style.Font.Bold = true;
                 worksheet.Cells[1, 1].Style.Font.Size = 16;
@@ -212,16 +212,20 @@ namespace Thietbi.Controllers
 
                 // Tiêu đề bảng
                 worksheet.Cells[2, 1].Value = "ID";
-                worksheet.Cells[2, 2].Value = "Tên Thiết Bị";
-                worksheet.Cells[2, 3].Value = "Loại Thiết Bị";
-                worksheet.Cells[2, 4].Value = "Trạng Thái Thiết Bị";
-                worksheet.Cells[2, 5].Value = "Mô Tả";
-                worksheet.Cells[2, 6].Value = "Mã Thiết Bị HV";
-                worksheet.Cells[2, 7].Value = "Mã Thiết Bị NSX";
-                worksheet.Cells[2, 8].Value = "Vị Trí Đặt";
+                worksheet.Cells[2, 2].Value = "ID Người Sở Hữu";
+                worksheet.Cells[2, 3].Value = "ID Đơn Vị Sở Hữu";
+                worksheet.Cells[2, 4].Value = "Ngày Thêm";
+                worksheet.Cells[2, 5].Value = "Tên Thiết Bị";
+                worksheet.Cells[2, 6].Value = "Mô Tả";
+                worksheet.Cells[2, 7].Value = "Mã HV";
+                worksheet.Cells[2, 8].Value = "Mã Nhà SX";
+                worksheet.Cells[2, 9].Value = "Cấu Hình";
+                worksheet.Cells[2, 10].Value = "Vị Trí Đặt";
+                worksheet.Cells[2, 11].Value = "Loại Thiết Bị";
+                worksheet.Cells[2, 12].Value = "Trang Thái";
 
                 // Định dạng tiêu đề
-                using (var range = worksheet.Cells[2, 1, 2, 8])
+                using (var range = worksheet.Cells[2, 1, 2, 12])
                 {
                     range.Style.Font.Bold = true;
                     range.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
@@ -234,21 +238,25 @@ namespace Thietbi.Controllers
                 foreach (var item in data)
                 {
                     worksheet.Cells[row, 1].Value = item.IdThietBi;
-                    worksheet.Cells[row, 2].Value = item.TenThietBi;
-                    worksheet.Cells[row, 3].Value = item.IdLoaiThietBiNavigation?.LoaiThietBi;
-                    worksheet.Cells[row, 4].Value = item.IdTrangThaiThietBiNavigation?.TrangThaiThietBi;
-                    worksheet.Cells[row, 5].Value = item.MoTa;
-                    worksheet.Cells[row, 6].Value = item.MaThietBiHv;
-                    worksheet.Cells[row, 7].Value = item.MaThietBiNhaSx;
-                    worksheet.Cells[row, 8].Value = item.ViTriDat;
+                    worksheet.Cells[row, 2].Value = item.IdNguoiSoHuu;
+                    worksheet.Cells[row, 3].Value = item.IdDonViSoHuu;
+                    worksheet.Cells[row, 4].Value = item.NgayThemThietBi;
+                    worksheet.Cells[row, 5].Value = item.TenThietBi;
+                    worksheet.Cells[row, 6].Value = item.MoTa;
+                    worksheet.Cells[row, 7].Value = item.MaThietBiHv;
+                    worksheet.Cells[row, 8].Value = item.MaThietBiNhaSx;
+                    worksheet.Cells[row, 9].Value = item.CauHinh;
+                    worksheet.Cells[row, 10].Value = item.ViTriDat;
+                    worksheet.Cells[row, 11].Value = item.IdLoaiThietBiNavigation?.LoaiThietBi;
+                    worksheet.Cells[row, 12].Value = item.IdTrangThaiThietBiNavigation?.TrangThaiThietBi;
                     row++;
                 }
 
                 // Thêm viền cho toàn bộ bảng
-                worksheet.Cells[2, 1, row - 1, 8].Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                worksheet.Cells[2, 1, row - 1, 8].Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                worksheet.Cells[2, 1, row - 1, 8].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                worksheet.Cells[2, 1, row - 1, 8].Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                worksheet.Cells[2, 1, row - 1, 12].Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                worksheet.Cells[2, 1, row - 1, 12].Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                worksheet.Cells[2, 1, row - 1, 12].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                worksheet.Cells[2, 1, row - 1, 12].Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
 
                 worksheet.Cells.AutoFitColumns();
 
@@ -259,6 +267,100 @@ namespace Thietbi.Controllers
                 string excelName = $"DanhSachThietBi_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
                 return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
             }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ImportFromExcel(IFormFile excelFile)
+        {
+            if (excelFile == null || excelFile.Length == 0)
+            {
+                TempData["ErrorMessage"] = "Vui lòng chọn file Excel để tải lên.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            try
+            {
+                using (var stream = new MemoryStream())
+                {
+                    await excelFile.CopyToAsync(stream);
+                    using (var package = new ExcelPackage(stream))
+                    {
+                        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+                        // Lấy sheet đầu tiên
+                        var worksheet = package.Workbook.Worksheets.FirstOrDefault();
+                        if (worksheet == null)
+                        {
+                            TempData["ErrorMessage"] = "File Excel không hợp lệ.";
+                            return RedirectToAction(nameof(Index));
+                        }
+
+                        // Đọc dữ liệu từ hàng thứ 2 (bỏ qua tiêu đề)
+                        for (int row = 2; row <= worksheet.Dimension.End.Row; row++)
+                        {
+                            if (worksheet.Cells[row, 1].Value == null) continue; // Bỏ qua hàng rỗng
+
+                            try
+                            {
+                                var thietBi = new TbThietBi
+                                {
+                                    IdThietBi = int.Parse(worksheet.Cells[row, 1].Text),
+                                    IdNguoiSoHuu = int.Parse(worksheet.Cells[row, 2].Text),
+                                    IdDonViSoHuu = int.Parse(worksheet.Cells[row, 3].Text),
+                                    NgayThemThietBi = DateTime.TryParse(worksheet.Cells[row, 4].Text, out var ngayThem) ? ngayThem : DateTime.Now,
+                                    TenThietBi = worksheet.Cells[row, 5].Text,
+                                    MoTa = worksheet.Cells[row, 6].Text,
+                                    MaThietBiHv = worksheet.Cells[row, 7].Text,
+                                    MaThietBiNhaSx = worksheet.Cells[row, 8].Text,
+                                    CauHinh = worksheet.Cells[row, 9].Text,
+                                    ViTriDat = worksheet.Cells[row, 10].Text,
+                                    IdLoaiThietBi = int.Parse(worksheet.Cells[row, 11].Text),
+                                    IdTrangThaiThietBi = int.Parse(worksheet.Cells[row, 12].Text)
+                                };
+
+                                // Kiểm tra trùng mã thiết bị
+                                if (!_context.TbThietBis.Any(e => e.MaThietBiHv == thietBi.MaThietBiHv))
+                                {
+                                    _context.TbThietBis.Add(thietBi);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                TempData["ErrorMessage"] = $"Lỗi tại dòng {row}: {ex.Message}";
+                                return RedirectToAction(nameof(Index));
+                            }
+                        }
+
+                        await _context.SaveChangesAsync();
+                    }
+                }
+
+                TempData["SuccessMessage"] = "Import dữ liệu từ file Excel thành công!";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Có lỗi xảy ra khi import file Excel: {ex.Message}";
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+        public IActionResult Chart()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetChartData()
+        {
+            var chartData = await _context.TbThietBis
+                .GroupBy(t => t.IdLoaiThietBiNavigation.LoaiThietBi)
+                .Select(g => new
+                {
+                    LoaiThietBi = g.Key,
+                    SoLuong = g.Count()
+                }).ToListAsync();
+
+            return Json(chartData);
         }
 
         private bool TbThietBiExists(int id)

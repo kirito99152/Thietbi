@@ -176,19 +176,20 @@ namespace Thietbi.Controllers
                 var worksheet = package.Workbook.Worksheets.Add("Danh sách quan hệ thiết bị");
 
                 // Hợp nhất và đặt tiêu đề lớn
-                worksheet.Cells[1, 1, 1, 8].Merge = true;
+                worksheet.Cells[1, 1, 1, 3].Merge = true;
                 worksheet.Cells[1, 1].Value = "Báo cáo danh sách quan hệ thiết bị";
                 worksheet.Cells[1, 1].Style.Font.Bold = true;
                 worksheet.Cells[1, 1].Style.Font.Size = 16;
                 worksheet.Cells[1, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
 
                 // Tiêu đề bảng
-                worksheet.Cells[2, 1].Value = "THIẾT BỊ CHA";
-                worksheet.Cells[2, 2].Value = "ITHIẾT BỊ CON";
+                worksheet.Cells[2, 1].Value = "STT";
+                worksheet.Cells[2, 2].Value = "THIẾT BỊ CHA";
+                worksheet.Cells[2, 3].Value = "ITHIẾT BỊ CON";
             
 
                 // Định dạng tiêu đề
-                using (var range = worksheet.Cells[2, 1, 2, 8])
+                using (var range = worksheet.Cells[2, 1, 2, 3])
                 {
                     range.Style.Font.Bold = true;
                     range.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
@@ -200,16 +201,17 @@ namespace Thietbi.Controllers
                 int row = 3;
                 foreach (var item in data)
                 {
-                    worksheet.Cells[row, 1].Value = item.IdThietBiChaNavigation?.TenThietBi;
-                    worksheet.Cells[row, 2].Value = item.IdThietBiConNavigation?.TenThietBi;
+                    worksheet.Cells[row, 1].Value = item.IdQuanHeThietBi;
+                    worksheet.Cells[row, 2].Value = item.IdThietBiChaNavigation?.TenThietBi;
+                    worksheet.Cells[row, 3].Value = item.IdThietBiConNavigation?.TenThietBi;
                     row++;
                 }
 
                 // Thêm viền cho toàn bộ bảng
-                worksheet.Cells[2, 1, row - 1, 2].Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                worksheet.Cells[2, 1, row - 1, 2].Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                worksheet.Cells[2, 1, row - 1, 2].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                worksheet.Cells[2, 1, row - 1, 2].Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                worksheet.Cells[2, 1, row - 1, 3].Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                worksheet.Cells[2, 1, row - 1, 3].Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                worksheet.Cells[2, 1, row - 1, 3].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                worksheet.Cells[2, 1, row - 1, 3].Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
 
                 worksheet.Cells.AutoFitColumns();
 
@@ -222,6 +224,19 @@ namespace Thietbi.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetChartData()
+        {
+            var chartData = await _context.TbQuanHeThietBis
+                .GroupBy(t => t.IdThietBiChaNavigation.TenThietBi)
+                .Select(g => new
+                {
+                    LoaiThietBi = g.Key,
+                    SoLuong = g.Count()
+                }).ToListAsync();
+
+            return Json(chartData);
+        }
         private bool TbQuanHeThietBiExists(int id)
         {
             return _context.TbQuanHeThietBis.Any(e => e.IdQuanHeThietBi == id);
