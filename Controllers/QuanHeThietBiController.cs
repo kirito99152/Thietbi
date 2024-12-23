@@ -1,10 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
 using Thietbi.Models;
 
 namespace Thietbi.Controllers
@@ -159,6 +160,66 @@ namespace Thietbi.Controllers
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> ExportToExcel()
+        {
+            // Lấy dữ liệu từ database
+            List<TbQuanHeThietBi> data = await _context.TbQuanHeThietBis.Include(t => t.IdThietBiChaNavigation).Include(t => t.IdThietBiConNavigation)
+                .ToListAsync();
+
+            // Tạo một file Excel với EPPlus
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Danh sách quan hệ thiết bị");
+
+                // Hợp nhất và đặt tiêu đề lớn
+                worksheet.Cells[1, 1, 1, 8].Merge = true;
+                worksheet.Cells[1, 1].Value = "Báo cáo danh sách quan hệ thiết bị";
+                worksheet.Cells[1, 1].Style.Font.Bold = true;
+                worksheet.Cells[1, 1].Style.Font.Size = 16;
+                worksheet.Cells[1, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+
+                // Tiêu đề bảng
+                worksheet.Cells[2, 1].Value = "THIẾT BỊ CHA";
+                worksheet.Cells[2, 2].Value = "ITHIẾT BỊ CON";
+            
+
+                // Định dạng tiêu đề
+                using (var range = worksheet.Cells[2, 1, 2, 8])
+                {
+                    range.Style.Font.Bold = true;
+                    range.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                    range.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
+                    range.Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thick);
+                }
+
+                // Thêm dữ liệu vào bảng
+                int row = 3;
+                foreach (var item in data)
+                {
+                    worksheet.Cells[row, 1].Value = item.IdThietBiChaNavigation?.TenThietBi;
+                    worksheet.Cells[row, 2].Value = item.IdThietBiConNavigation?.TenThietBi;
+                    row++;
+                }
+
+                // Thêm viền cho toàn bộ bảng
+                worksheet.Cells[2, 1, row - 1, 2].Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                worksheet.Cells[2, 1, row - 1, 2].Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                worksheet.Cells[2, 1, row - 1, 2].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                worksheet.Cells[2, 1, row - 1, 2].Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+
+                worksheet.Cells.AutoFitColumns();
+
+                var stream = new System.IO.MemoryStream();
+                package.SaveAs(stream);
+                stream.Position = 0;
+
+                string excelName = $"DanhSachQuanHeThietBi_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
+                return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
+            }
         }
 
         private bool TbQuanHeThietBiExists(int id)

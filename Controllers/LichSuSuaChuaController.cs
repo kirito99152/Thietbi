@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
 using Thietbi.Models;
 
 namespace Thietbi.Controllers
@@ -288,7 +289,84 @@ namespace Thietbi.Controllers
             }
         }
 
+        public async Task<IActionResult> ExportToExcel()
+        {
+            // Lấy dữ liệu từ database
+            List<TbLichSuSuaChua> data = await _context.TbLichSuSuaChuas.Include(t => t.IdThietBiNavigation)
+                .ToListAsync();
 
+            // Tạo một file Excel với EPPlus
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Danh sách lịch sử sửa chữa");
+
+                // Hợp nhất và đặt tiêu đề lớn
+                worksheet.Cells[1, 1, 1, 8].Merge = true;
+                worksheet.Cells[1, 1].Value = "Báo cáo danh sách lịch sử sửa chữa";
+                worksheet.Cells[1, 1].Style.Font.Bold = true;
+                worksheet.Cells[1, 1].Style.Font.Size = 16;
+                worksheet.Cells[1, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+
+                // Tiêu đề bảng
+                worksheet.Cells[2, 1].Value = "ID NGƯỜI BÁO";
+                worksheet.Cells[2, 2].Value = "ID ĐƠN VỊ BÁO";
+                worksheet.Cells[2, 3].Value = "ID CÁN BỘ SỬA CHỮA";
+                worksheet.Cells[2, 4].Value = "ID ĐƠN VỊ SỬA CHỮA";
+                worksheet.Cells[2, 5].Value = "THỜI GIAN BẮT ĐẦU";
+                worksheet.Cells[2, 6].Value = "THỜI GIAN KẾT THÚC";
+                worksheet.Cells[2, 7].Value = "HIỆN TƯỢNG";
+                worksheet.Cells[2, 8].Value = "NGUYÊN NHÂN XÁC ĐỊNH";
+                worksheet.Cells[2, 9].Value = "KẾT QUẢ SỬA CHỮA";
+                worksheet.Cells[2, 10].Value = "THÔNG TIN SỬA CHỮA";
+                worksheet.Cells[2, 11].Value = "CÁCH SỬA";
+                worksheet.Cells[2, 12].Value = "THIẾT BỊ";
+
+                // Định dạng tiêu đề
+                using (var range = worksheet.Cells[2, 1, 2, 8])
+                {
+                    range.Style.Font.Bold = true;
+                    range.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                    range.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
+                    range.Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thick);
+                }
+
+                // Thêm dữ liệu vào bảng
+                int row = 3;
+                foreach (var item in data)
+                {
+                    worksheet.Cells[row, 1].Value = item.IdNguoiBao;
+                    worksheet.Cells[row, 2].Value = item.IdDonViBao;
+                    worksheet.Cells[row, 3].Value = item.IdCanBoSua;
+                    worksheet.Cells[row, 4].Value = item.IdDonViSua;
+                    worksheet.Cells[row, 5].Value = item.ThoiGianBatDau;
+                    worksheet.Cells[row, 6].Value = item.ThoiGianKetThuc;
+                    worksheet.Cells[row, 7].Value = item.HienTuong;
+                    worksheet.Cells[row, 8].Value = item.NguyenNhanXacDinh;
+                    worksheet.Cells[row, 9].Value = item.KetQuaSua;
+                    worksheet.Cells[row, 10].Value = item.ThongTinSuaChua;
+                    worksheet.Cells[row, 11].Value = item.CachSua;
+                    worksheet.Cells[row, 12].Value = item.IdThietBiNavigation?.TenThietBi;
+                    row++;
+                }
+
+                // Thêm viền cho toàn bộ bảng
+                worksheet.Cells[2, 1, row - 1, 12].Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                worksheet.Cells[2, 1, row - 1, 12].Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                worksheet.Cells[2, 1, row - 1, 12].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                worksheet.Cells[2, 1, row - 1, 12].Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+
+                worksheet.Cells.AutoFitColumns();
+
+                var stream = new System.IO.MemoryStream();
+                package.SaveAs(stream);
+                stream.Position = 0;
+
+                string excelName = $"DanhSachLichSuSuaChua_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
+                return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
+            }
+        }
         private bool TbLichSuSuaChuaExists(int id)
         {
             return _context.TbLichSuSuaChuas.Any(e => e.IdLichSuSuaChua == id);
