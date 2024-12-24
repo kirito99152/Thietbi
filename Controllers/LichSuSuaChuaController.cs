@@ -62,40 +62,9 @@ namespace Thietbi.Controllers
         {
             try
             {
-                // Kiểm tra nếu IdNguoiBao đã tồn tại trong cơ sở dữ liệu
-                var nguoiBaoExists = await _context.TbLichSuSuaChuas.AnyAsync(x => x.IdNguoiBao == tbLichSuSuaChua.IdNguoiBao);
-                if (nguoiBaoExists)
-                {
-                    ModelState.AddModelError("IdNguoiBao", "ID Người Báo đã tồn tại trong hệ thống.");
-                    ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "TenThietBi", tbLichSuSuaChua.IdThietBi);
-                    return View(tbLichSuSuaChua);
-                }
-                // Kiểm tra nếu IdDonViBao đã tồn tại trong cơ sở dữ liệu
-                var donViBaoExists = await _context.TbLichSuSuaChuas.AnyAsync(x => x.IdDonViBao == tbLichSuSuaChua.IdDonViBao);
-                if (donViBaoExists)
-                {
-                    ModelState.AddModelError("IdDonViBao", "ID Đơn Vị Báo đã tồn tại trong hệ thống.");
-                    ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "TenThietBi", tbLichSuSuaChua.IdThietBi);
-                    return View(tbLichSuSuaChua);
-                }
+                
 
-                // Kiểm tra nếu IdCanBoSua đã tồn tại trong cơ sở dữ liệu
-                var canBoSuaExists = await _context.TbLichSuSuaChuas.AnyAsync(x => x.IdCanBoSua == tbLichSuSuaChua.IdCanBoSua);
-                if (canBoSuaExists)
-                {
-                    ModelState.AddModelError("IdCanBoSua", "ID Cán Bộ Sửa đã tồn tại trong hệ thống.");
-                    ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "TenThietBi", tbLichSuSuaChua.IdThietBi);
-                    return View(tbLichSuSuaChua);
-                }
-
-                // Kiểm tra nếu IdDonViSua đã tồn tại trong cơ sở dữ liệu
-                var donViSuaExists = await _context.TbLichSuSuaChuas.AnyAsync(x => x.IdDonViSua == tbLichSuSuaChua.IdDonViSua);
-                if (donViSuaExists)
-                {
-                    ModelState.AddModelError("IdDonViSua", "ID Đơn Vị Sửa đã tồn tại trong hệ thống.");
-                    ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "TenThietBi", tbLichSuSuaChua.IdThietBi);
-                    return View(tbLichSuSuaChua);
-                }
+               
 
                 // Kiểm tra nếu Model hợp lệ
                 if (ModelState.IsValid)
@@ -152,40 +121,7 @@ namespace Thietbi.Controllers
 
             try
             {
-                // Kiểm tra nếu IdNguoiBao đã tồn tại trong cơ sở dữ liệu, ngoại trừ bản ghi đang chỉnh sửa
-                var nguoiBaoExists = await _context.TbLichSuSuaChuas.AnyAsync(x => x.IdNguoiBao == tbLichSuSuaChua.IdNguoiBao && x.IdLichSuSuaChua != tbLichSuSuaChua.IdLichSuSuaChua);
-                if (nguoiBaoExists)
-                {
-                    ModelState.AddModelError("IdNguoiBao", "ID Người Báo đã tồn tại trong hệ thống.");
-                    ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "TenThietBi", tbLichSuSuaChua.IdThietBi);
-                    return View(tbLichSuSuaChua);
-                }
-                // Kiểm tra nếu IdDonViBao đã tồn tại trong cơ sở dữ liệu, ngoại trừ bản ghi đang chỉnh sửa
-                var donViBaoExists = await _context.TbLichSuSuaChuas.AnyAsync(x => x.IdDonViBao == tbLichSuSuaChua.IdDonViBao && x.IdLichSuSuaChua != tbLichSuSuaChua.IdLichSuSuaChua);
-                if (donViBaoExists)
-                {
-                    ModelState.AddModelError("IdDonViBao", "ID Đơn Vị Báo đã tồn tại trong hệ thống.");
-                    ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "TenThietBi", tbLichSuSuaChua.IdThietBi);
-                    return View(tbLichSuSuaChua);
-                }
-
-                // Kiểm tra nếu IdCanBoSua đã tồn tại trong cơ sở dữ liệu, ngoại trừ bản ghi đang chỉnh sửa
-                var canBoSuaExists = await _context.TbLichSuSuaChuas.AnyAsync(x => x.IdCanBoSua == tbLichSuSuaChua.IdCanBoSua && x.IdLichSuSuaChua != tbLichSuSuaChua.IdLichSuSuaChua);
-                if (canBoSuaExists)
-                {
-                    ModelState.AddModelError("IdCanBoSua", "ID Cán Bộ Sửa đã tồn tại trong hệ thống.");
-                    ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "TenThietBi", tbLichSuSuaChua.IdThietBi);
-                    return View(tbLichSuSuaChua);
-                }
-
-                // Kiểm tra nếu IdDonViSua đã tồn tại trong cơ sở dữ liệu, ngoại trừ bản ghi đang chỉnh sửa
-                var donViSuaExists = await _context.TbLichSuSuaChuas.AnyAsync(x => x.IdDonViSua == tbLichSuSuaChua.IdDonViSua && x.IdLichSuSuaChua != tbLichSuSuaChua.IdLichSuSuaChua);
-                if (donViSuaExists)
-                {
-                    ModelState.AddModelError("IdDonViSua", "ID Đơn Vị Sửa đã tồn tại trong hệ thống.");
-                    ViewData["IdThietBi"] = new SelectList(_context.TbThietBis, "IdThietBi", "TenThietBi", tbLichSuSuaChua.IdThietBi);
-                    return View(tbLichSuSuaChua);
-                }
+               
 
                 if (ModelState.IsValid)
                 {

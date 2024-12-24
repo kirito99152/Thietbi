@@ -63,19 +63,7 @@ namespace Thietbi.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    // Kiểm tra trùng IdNguoiSoHuu
-                    if (_context.TbThietBis.Any(e => e.IdNguoiSoHuu == tbThietBi.IdNguoiSoHuu))
-                    {
-                        ModelState.AddModelError("IdNguoiSoHuu", "ID Người Sở Hữu đã tồn tại.");
-                        throw new Exception("ID Người Sở Hữu bị trùng.");
-                    }
-
-                    // Kiểm tra trùng IdDonViSoHuu
-                    if (_context.TbThietBis.Any(e => e.IdDonViSoHuu == tbThietBi.IdDonViSoHuu))
-                    {
-                        ModelState.AddModelError("IdDonViSoHuu", "ID Đơn Vị Sở Hữu đã tồn tại.");
-                        throw new Exception("ID Đơn Vị Sở Hữu bị trùng.");
-                    }
+              
 
                     _context.Add(tbThietBi);
                     await _context.SaveChangesAsync();
@@ -124,19 +112,7 @@ namespace Thietbi.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    // Kiểm tra trùng IdNguoiSoHuu
-                    if (_context.TbThietBis.Any(e => e.IdNguoiSoHuu == tbThietBi.IdNguoiSoHuu && e.IdThietBi != id))
-                    {
-                        ModelState.AddModelError("IdNguoiSoHuu", "ID Người Sở Hữu đã tồn tại.");
-                        throw new Exception("ID Người Sở Hữu bị trùng.");
-                    }
-
-                    // Kiểm tra trùng IdDonViSoHuu
-                    if (_context.TbThietBis.Any(e => e.IdDonViSoHuu == tbThietBi.IdDonViSoHuu && e.IdThietBi != id))
-                    {
-                        ModelState.AddModelError("IdDonViSoHuu", "ID Đơn Vị Sở Hữu đã tồn tại.");
-                        throw new Exception("ID Đơn Vị Sở Hữu bị trùng.");
-                    }
+                   
 
                     _context.Update(tbThietBi);
                     await _context.SaveChangesAsync();

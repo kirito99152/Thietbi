@@ -61,25 +61,7 @@ namespace Thietbi.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    // Kiểm tra trùng IdNguoiDuocGiao
-                    if (_context.TbLichSuCapPhats.Any(e => e.IdNguoiDuocGiao == tbLichSuCapPhat.IdNguoiDuocGiao))
-                    {
-                        ModelState.AddModelError("IdNguoiDuocGiao", "ID Người Được Giao đã tồn tại.");
-                        throw new Exception("ID Người Được Giao bị trùng.");
-                    }
-                    // Kiểm tra trùng IdDonViDuocGiao
-                    if (_context.TbLichSuCapPhats.Any(e => e.IdDonViDuocGiao == tbLichSuCapPhat.IdDonViDuocGiao))
-                    {
-                        ModelState.AddModelError("IdDonViDuocGiao", "ID Đơn Vị Được Giao đã tồn tại.");
-                        throw new Exception("ID Đơn Vị Được Giao bị trùng.");
-                    }
-                    // Kiểm tra trùng IdNguoiCapPhat
-                    if (_context.TbLichSuCapPhats.Any(e => e.IdNguoiCapPhat == tbLichSuCapPhat.IdNguoiCapPhat))
-                    {
-                        ModelState.AddModelError("IdNguoiCapPhat", "ID Người Cấp Phát đã tồn tại.");
-                        throw new Exception("ID Người Cấp Phát bị trùng.");
-                    }
-
+                    
                     _context.Add(tbLichSuCapPhat);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -125,24 +107,7 @@ namespace Thietbi.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    // Kiểm tra trùng IdNguoiDuocGiao
-                    if (_context.TbLichSuCapPhats.Any(e => e.IdNguoiDuocGiao == tbLichSuCapPhat.IdNguoiDuocGiao && e.IdLichSuCapPhat != id))
-                    {
-                        ModelState.AddModelError("IdNguoiDuocGiao", "ID Người Được Giao đã tồn tại.");
-                        throw new Exception("ID Người Được Giao bị trùng.");
-                    }
-                    // Kiểm tra trùng IdDonViDuocGiao
-                    if (_context.TbLichSuCapPhats.Any(e => e.IdDonViDuocGiao == tbLichSuCapPhat.IdDonViDuocGiao && e.IdLichSuCapPhat != id))
-                    {
-                        ModelState.AddModelError("IdDonViDuocGiao", "ID Đơn Vị Được Giao đã tồn tại.");
-                        throw new Exception("ID Đơn Vị Được Giao bị trùng.");
-                    }
-                    // Kiểm tra trùng IdNguoiCapPhat
-                    if (_context.TbLichSuCapPhats.Any(e => e.IdNguoiCapPhat == tbLichSuCapPhat.IdNguoiCapPhat && e.IdLichSuCapPhat != id))
-                    {
-                        ModelState.AddModelError("IdNguoiCapPhat", "ID Người Cấp Phát đã tồn tại.");
-                        throw new Exception("ID Người Cấp Phát bị trùng.");
-                    }
+                    
 
                     _context.Update(tbLichSuCapPhat);
                     await _context.SaveChangesAsync();
