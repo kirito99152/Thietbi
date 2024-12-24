@@ -23,6 +23,11 @@
                     <!-- Cột bên trái -->
                     <div class="col-md-6">
                         <div class="mb-3">
+                            <label asp-for="IdThietBi" class="form-label"><i class="fas fa-cogs"></i> Thiết Bị</label>
+                            <select asp-for="IdThietBi" class="form-select shadow-sm form-select-lg" asp-items="ViewBag.IdThietBi"></select>
+                            <span asp-validation-for="IdThietBi" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
                             <label asp-for="IdNguoiBao" class="form-label"><i class="fas fa-user"></i> Người Báo</label>
                             <input asp-for="IdNguoiBao" class="form-control shadow-sm form-control-lg" />
                             <span asp-validation-for="IdNguoiBao" class="text-danger"></span>
