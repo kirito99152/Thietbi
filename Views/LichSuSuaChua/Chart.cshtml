@@ -9,7 +9,8 @@
 
 <h2>Biểu đồ tỷ lệ sửa chữa</h2>
 
-<canvas id="successRateChart" width="400" height="400"></canvas>
+<canvas id="successRateChart" style="width: 100px; height: 100px;"></canvas>
+
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -32,6 +33,8 @@
                         },
                         options: {
                             responsive: true,
+                            maintainAspectRatio: true, // Đảm bảo giữ tỷ lệ
+                            aspectRatio: 1.5, // Tỷ lệ chiều rộng / chiều cao
                             plugins: {
                                 legend: {
                                     position: 'top',
@@ -48,6 +51,7 @@
                                 }
                             }
                         }
+
                     });
                 });
         });
