@@ -412,6 +412,10 @@ namespace Thietbi.Controllers
             ViewData["IdDonViSoHuu"] = idDonViSoHuu;
             return View(device);
         }
+        public IActionResult TraCuu()
+        {
+            return View();
+        }
         private bool TbThietBiExists(int id)
         {
             return _context.TbThietBis.Any(e => e.IdThietBi == id);

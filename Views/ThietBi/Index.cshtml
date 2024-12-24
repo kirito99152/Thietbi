@@ -12,25 +12,13 @@
                 <i class="bi bi-file-earmark-excel"></i> Xuất Excel
             </a>
             <!-- Nút chuyển đến trang biểu đồ -->
-            <a href="/ThietBi/Statistics" class="btn btn-primary mb-3">
+            <a href="/ThietBi/Statistics" class="btn btn-primary mb-4">
                 Xem biểu đồ thống kê
             </a>
-            <form asp-action="ByOwner" method="get" class="form-inline">
-                <div class="form-group">
-                    <label for="idNguoiSoHuu">Nhập ID Người Sở Hữu:</label>
-                    <input type="number" id="idNguoiSoHuu" name="idNguoiSoHuu" class="form-control" required />
-                </div>
-                <button type="submit" class="btn btn-primary">Xem Thiết Bị</button>
-            </form>
-
-            <form asp-action="ByGroup" method="get" class="form-inline">
-                <div class="form-group">
-                    <label for="idDonViiSoHuu">Nhập ID Đơn Vị Sở Hữu:</label>
-                    <input type="number" id="idDonViSoHuu" name="idDonViSoHuu" class="form-control" required />
-                </div>
-                <button type="submit" class="btn btn-primary">Xem Thiết Bị</button>
-            </form>
-
+            <a href="/ThietBi/TraCuu" class="btn btn-primary mb-3">
+                Xem biểu đồ thống kê
+            </a>
+            
         </div>
         <form asp-action="ImportFromExcel" method="post" enctype="multipart/form-data">
             <div class="form-group">

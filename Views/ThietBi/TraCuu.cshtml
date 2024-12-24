@@ -1,0 +1,24 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="card shadow-lg">
+    
+        <form asp-action="ByOwner" method="get" class="form-inline">
+            <div class="form-group">
+                <label for="idNguoiSoHuu">Nhập ID Người Sở Hữu:</label>
+                <input type="number" id="idNguoiSoHuu" name="idNguoiSoHuu" class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Xem Thiết Bị</button>
+        </form>
+
+        <form asp-action="ByGroup" method="get" class="form-inline">
+            <div class="form-group">
+                <label for="idDonViiSoHuu">Nhập ID Đơn Vị Sở Hữu:</label>
+                <input type="number" id="idDonViSoHuu" name="idDonViSoHuu" class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Xem Thiết Bị</button>
+        </form>
+
+    </div>
