@@ -367,19 +367,78 @@ namespace Thietbi.Controllers
                 return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
             }
         }
-        [HttpGet]
-        public async Task<IActionResult> GetChartData()
+        public IActionResult Chart()
         {
-            var chartData = await _context.TbLichSuSuaChuas
-                .GroupBy(t => t.IdThietBiNavigation.TenThietBi)
-                .Select(g => new
-                {
-                    LoaiThietBi = g.Key,
-                    SoLuong = g.Count()
-                }).ToListAsync();
-
-            return Json(chartData);
+            return View();
         }
+        [HttpGet]
+        public async Task<IActionResult> SuccessRateChartData()
+        {
+            try
+            {
+                // Lấy dữ liệu sửa chữa từ DbContext
+                var data = await _context.TbLichSuSuaChuas.ToListAsync();
+
+                // Tính toán tỷ lệ sửa thành công và không thành công
+                var successCount = data.Count(x => x.KetQuaSua == "Thành Công ");
+                var failCount = data.Count(x => x.KetQuaSua != "Thành Công ");
+
+                return Json(new
+                {
+                    labels = new[] { "Thành Công", "Không Sửa Được" },
+                    values = new[] { successCount, failCount }
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
+        public IActionResult RepairChart()
+        {
+            return View();
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> RepairCountByMonthChartData()
+        {
+            try
+            {
+                // Lấy dữ liệu sửa chữa từ DbContext
+                var data = await _context.TbLichSuSuaChuas.ToListAsync();
+
+                // Nhóm dữ liệu theo tháng và năm từ trường ThoiGianBatDau
+                var chartData = data
+                    .Where(x => x.ThoiGianBatDau.HasValue)  // Kiểm tra trường thời gian bắt đầu có giá trị
+                    .GroupBy(x => new
+                    {
+                        Year = x.ThoiGianBatDau.Value.Year,
+                        Month = x.ThoiGianBatDau.Value.Month
+                    })
+                    .Select(g => new
+                    {
+                        YearMonth = $"{g.Key.Month}/{g.Key.Year}",
+                        Count = g.Count()
+                    })
+                    .OrderBy(g => g.YearMonth)
+                    .ToList();
+
+                // Trả về dữ liệu JSON cho biểu đồ
+                return Json(new
+                {
+                    labels = chartData.Select(x => x.YearMonth).ToArray(),
+                    values = chartData.Select(x => x.Count).ToArray()
+                });
+            }
+            catch (Exception ex)
+            {
+                // Xử lý lỗi nếu có
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
         private bool TbLichSuSuaChuaExists(int id)
         {
             return _context.TbLichSuSuaChuas.Any(e => e.IdLichSuSuaChua == id);

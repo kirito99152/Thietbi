@@ -1,0 +1,58 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewData["Title"] = "Biểu đồ tỷ lệ sửa chữa";
+}
+
+<h2>Biểu đồ tỷ lệ sửa chữa</h2>
+
+<canvas id="successRateChart" width="400" height="400"></canvas>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('@Url.Action("SuccessRateChartData", "LichSuSuaChua")')
+                .then(response => response.json())
+                .then(data => {
+                    const ctx = document.getElementById('successRateChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                label: 'Tỷ lệ sửa chữa',
+                                data: data.values,
+                                backgroundColor: ['#4CAF50', '#F44336'],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function (context) {
+                                            let total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                            let value = context.raw;
+                                            let percentage = ((value / total) * 100).toFixed(2);
+                                            return `${context.label}: ${value} (${percentage}%)`;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                });
+        });
+    </script>
+}
+<div class="text-center mt-4">
+    <a asp-action="Index" class="btn btn-outline-secondary"><i class="fas fa-arrow-left"></i> Quay lại danh sách</a>
+</div>

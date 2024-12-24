@@ -344,24 +344,26 @@ namespace Thietbi.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        public IActionResult Chart()
+        // GET: ThietBi/Statistics
+        public IActionResult Statistics()
         {
             return View();
         }
-
-        [HttpGet]
-        public async Task<IActionResult> GetChartData()
+        // GET: ThietBi/DeviceStatistics
+        public async Task<IActionResult> DeviceStatistics()
         {
-            var chartData = await _context.TbThietBis
+            var data = await _context.TbThietBis
                 .GroupBy(t => t.IdLoaiThietBiNavigation.LoaiThietBi)
                 .Select(g => new
                 {
                     LoaiThietBi = g.Key,
                     SoLuong = g.Count()
-                }).ToListAsync();
+                })
+                .ToListAsync();
 
-            return Json(chartData);
+            return Json(data);
         }
+
 
         private bool TbThietBiExists(int id)
         {

@@ -1,0 +1,45 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewData["Title"] = "Biểu đồ Sửa chữa theo Tháng";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<canvas id="repairChart" width="400" height="200"></canvas>
+
+<script>
+    // Lấy dữ liệu cho biểu đồ từ Controller
+    $.getJSON('@Url.Action("RepairCountByMonthChartData", "LichSuSuaChua")', function (data) {
+        var ctx = document.getElementById('repairChart').getContext('2d');
+
+        // Khởi tạo biểu đồ
+        new Chart(ctx, {
+            type: 'bar',  // Loại biểu đồ (cột)
+            data: {
+                labels: data.labels,  // Các tháng
+                datasets: [{
+                    label: 'Số lượng sửa chữa',
+                    data: data.values,  // Số lượng sửa chữa theo từng tháng
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>
+<div class="text-center mt-4">
+    <a asp-action="Index" class="btn btn-outline-secondary"><i class="fas fa-arrow-left"></i> Quay lại danh sách</a>
+</div>

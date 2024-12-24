@@ -260,19 +260,7 @@ namespace Thietbi.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetChartData()
-        {
-            var chartData = await _context.TbLichSuCapPhats
-                .GroupBy(t => t.IdThietBiNavigation.TenThietBi)
-                .Select(g => new
-                {
-                    LoaiThietBi = g.Key,
-                    SoLuong = g.Count()
-                }).ToListAsync();
-
-            return Json(chartData);
-        }
+  
         private bool TbLichSuCapPhatExists(int id)
         {
             return _context.TbLichSuCapPhats.Any(e => e.IdLichSuCapPhat == id);

@@ -1,0 +1,53 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@{
+    ViewData["Title"] = "Thống kê số lượng thiết bị";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<canvas id="deviceChart" width="800" height="400"></canvas>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        async function loadChart() {
+            const response = await fetch('/ThietBi/DeviceStatistics');
+            const data = await response.json();
+
+            const labels = data.map(d => d.loaiThietBi);
+            const values = data.map(d => d.soLuong);
+
+            const ctx = document.getElementById('deviceChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar', // Loại biểu đồ
+                data: {
+                    labels: labels, // Tên các loại thiết bị
+                    datasets: [{
+                        label: 'Số lượng thiết bị',
+                        data: values, // Số lượng thiết bị
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        loadChart();
+    </script>
+}
+<div class="text-center mt-4">
+    <a asp-action="Index" class="btn btn-outline-secondary"><i class="fas fa-arrow-left"></i> Quay lại danh sách</a>
+</div>
