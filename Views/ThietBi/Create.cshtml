@@ -22,6 +22,11 @@
                     <!-- Left Column -->
                     <div class="col-md-6">
                         <div class="mb-3">
+                            <label asp-for="IdThietBi" class="form-label"><i class="fas fa-user"></i> ID Thiết Bị</label>
+                            <input asp-for="IdThietBi" class="form-control shadow-sm form-control-lg" />
+                            <span asp-validation-for="IdThietBi" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
                             <label asp-for="IdNguoiSoHuu" class="form-label"><i class="fas fa-user"></i> Người Sở Hữu</label>
                             <input asp-for="IdNguoiSoHuu" class="form-control shadow-sm form-control-lg" />
                             <span asp-validation-for="IdNguoiSoHuu" class="text-danger"></span>

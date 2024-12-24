@@ -32,5 +32,20 @@
                 </button>
             </div>
         </form>
+
+        <form asp-action="LSSC" asp-controller="LichSuSuaChua" method="get" class="row g-3 align-items-center mt-4">
+            <div class="form-group">
+                <label for="IdThietBi">Nhập ID Thiết Bị:</label>
+                <input type="number" class="form-control" id="IdThietBi" name="idThietBi" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Tra Cứu</button>
+        </form>
+        <form asp-action="LSCP" asp-controller="LichSuCapPhat" method="get" class="row g-3 align-items-center mt-4">
+            <div class="form-group">
+                <label for="IdThietBi">Nhập ID Thiết Bị:</label>
+                <input type="number" class="form-control" id="IdThietBi" name="idThietBi" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Tra Cứu</button>
+        </form>
     </div>
 </div>

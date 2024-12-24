@@ -1,0 +1,47 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<Thietbi.Models.TbLichSuCapPhat>
+
+@{
+    ViewData["Title"] = $"Lịch Sử Cấp Phát - ID Thiết Bị: {ViewData["IdThietBi"]}";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (!Model.Any())
+{
+    <p class="text-danger">Không có lịch sử cấp phát nào cho thiết bị này.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID Cấp Phát</th>
+                <th>Người Được Giao</th>
+                <th>Đơn Vị Được Giao</th>
+                <th>Người Cấp Phát</th>
+                <th>Thời Gian Cấp Phát</th>
+                <th>Thời Gian Thu Hồi</th>
+                <th>Ghi Chú</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.IdLichSuCapPhat<td>
+                    <td>@item.IdNguoiDuocGiao</td>
+                    <td>@item.IdDonViDuocGiao</td>
+                    <td>@item.IdNguoiCapPhat</td>
+                    <td>@item.ThoiGianCapPhat?.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>@item.ThoiGianThuHoi?.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>@item.GhiChu</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

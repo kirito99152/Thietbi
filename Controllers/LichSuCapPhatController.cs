@@ -225,7 +225,29 @@ namespace Thietbi.Controllers
             }
         }
 
-  
+
+        public async Task<IActionResult> LSCP(int? idThietBi)
+        {
+            if (idThietBi == null)
+            {
+                return NotFound("ID Người Sở Hữu không hợp lệ.");
+            }
+
+            // Lấy danh sách lịch sử sửa chữa theo ID thiết bị
+            var lichSuCapPhats = await _context.TbLichSuCapPhats
+                .Include(t => t.IdThietBiNavigation)
+                .Where(t => t.IdThietBi == idThietBi)
+                .ToListAsync();
+
+            if (lichSuCapPhats == null || !lichSuCapPhats.Any())
+            {
+                return NotFound("Không tìm thấy lịch sử của thiết này");
+            }
+
+            // Trả về View hiển thị danh sách thiết bị
+            ViewData["IdThietBi"] = idThietBi;
+            return View(lichSuCapPhats);
+        }
         private bool TbLichSuCapPhatExists(int id)
         {
             return _context.TbLichSuCapPhats.Any(e => e.IdLichSuCapPhat == id);
