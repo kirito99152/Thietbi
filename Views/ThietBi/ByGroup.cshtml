@@ -1,0 +1,40 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<Thietbi.Models.TbThietBi>
+
+@{
+    ViewData["Title"] = $"Thiết bị của Đơn Vị Sở Hữu ID: {ViewData["IdSoHuu"]}";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID Thiết Bị</th>
+            <th>Tên Thiết Bị</th>
+            <th>Mô Tả</th>
+            <th>Mã HV</th>
+            <th>Mã Nhà SX</th>
+            <th>Loại Thiết Bị</th>
+            <th>Trạng Thái</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.IdThietBi</td>
+                <td>@item.TenThietBi</td>
+                <td>@item.MoTa</td>
+                <td>@item.MaThietBiHv</td>
+                <td>@item.MaThietBiNhaSx</td>
+                <td>@item.IdLoaiThietBiNavigation?.LoaiThietBi</td>
+                <td>@item.IdTrangThaiThietBiNavigation?.TrangThaiThietBi</td>
+            </tr>
+        }
+    </tbody>
+</table>

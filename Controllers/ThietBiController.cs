@@ -364,7 +364,54 @@ namespace Thietbi.Controllers
             return Json(data);
         }
 
+        // GET: ThietBi/ByOwner/5
+        public async Task<IActionResult> ByOwner(int? idNguoiSoHuu)
+        {
+            if (idNguoiSoHuu == null)
+            {
+                return NotFound("ID Người Sở Hữu không được cung cấp.");
+            }
 
+            // Lấy danh sách thiết bị thuộc về người sở hữu
+            var devices = await _context.TbThietBis
+                .Where(t => t.IdNguoiSoHuu == idNguoiSoHuu)
+                .Include(t => t.IdLoaiThietBiNavigation)
+                .Include(t => t.IdTrangThaiThietBiNavigation)
+                .ToListAsync();
+
+            if (devices == null || !devices.Any())
+            {
+                return NotFound($"Không tìm thấy thiết bị nào cho ID Người Sở Hữu {idNguoiSoHuu}.");
+            }
+
+            // Trả về View hiển thị danh sách thiết bị
+            ViewData["IdNguoiSoHuu"] = idNguoiSoHuu;
+            return View(devices);
+        }
+
+        public async Task<IActionResult> ByGroup(int? idDonViSoHuu)
+        {
+            if (idDonViSoHuu == null)
+            {
+                return NotFound("ID Người Sở Hữu không được cung cấp.");
+            }
+
+            // Lấy danh sách thiết bị thuộc về người sở hữu
+            var device = await _context.TbThietBis
+                .Where(t => t.IdDonViSoHuu == idDonViSoHuu)
+                .Include(t => t.IdLoaiThietBiNavigation)
+                .Include(t => t.IdTrangThaiThietBiNavigation)
+                .ToListAsync();
+
+            if (device == null || !device.Any())
+            {
+                return NotFound($"Không tìm thấy thiết bị nào cho ID Đơn Vị Sở Hữu {idDonViSoHuu}.");
+            }
+
+            // Trả về View hiển thị danh sách thiết bị
+            ViewData["IdDonViSoHuu"] = idDonViSoHuu;
+            return View(device);
+        }
         private bool TbThietBiExists(int id)
         {
             return _context.TbThietBis.Any(e => e.IdThietBi == id);
