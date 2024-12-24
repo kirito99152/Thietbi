@@ -6,21 +6,22 @@
 <div class="container mt-4">
     <!-- Card bao quanh toàn bộ nội dung -->
     <div class="card shadow-lg">
-        <div class="card-header bg-primary text-white">
-            <h2 class="text-center mb-0 fw-bold">DANH SÁCH THIẾT BỊ</h2>
-            <a class="btn btn-success btn-sm fw-bold text-uppercase" asp-action="ExportToExcel">
-                <i class="bi bi-file-earmark-excel"></i> Xuất Excel
-            </a>
-            <!-- Nút chuyển đến trang biểu đồ -->
-            <a href="/ThietBi/Statistics" class="btn btn-primary fw-bold d-inline-flex align-items-center px-4 py-2 mb-4" style="border-radius: 8px; background-color: #007bff; border: none; transition: all 0.3s ease;">
-                <i class="bi bi-graph-up-arrow me-2"></i> XEM BIỂU ĐỒ THỐNG KÊ
-            </a>
-
-            <a href="/ThietBi/TraCuu" class="btn btn-warning fw-bold text-dark d-inline-flex align-items-center px-4 py-2 mb-3" style="border-radius: 10px; background-color: #ffc107; border: none; transition: all 0.3s ease;">
-                <i class="bi bi-search me-2"></i> TRA CỨU ID SỞ HỮU
-            </a>
-
-            
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h2 class="mb-0 fw-bold">DANH SÁCH THIẾT BỊ</h2>
+            <div class="btn-group" role="group">
+                <!-- Nút Xuất Excel -->
+                <a class="btn btn-success btn-sm fw-bold text-uppercase me-2" asp-action="ExportToExcel">
+                    <i class="bi bi-file-earmark-excel"></i> Xuất Excel
+                </a>
+                <!-- Nút Xem Biểu Đồ -->
+                <a href="/ThietBi/Statistics" class="btn btn-primary btn-sm fw-bold d-inline-flex align-items-center me-2 " style="background-color: #343a40;">
+                    <i class="bi bi-graph-up-arrow me-2"></i> Xem Biểu Đồ Thống Kê
+                </a>
+                <!-- Nút Tra Cứu -->
+                <a href="/ThietBi/TraCuu" class="btn btn-warning btn-sm fw-bold text-dark d-inline-flex align-items-center">
+                    <i class="bi bi-search me-2"></i> Tra Cứu ID Sở Hữu
+                </a>
+            </div>
         </div>
         
 

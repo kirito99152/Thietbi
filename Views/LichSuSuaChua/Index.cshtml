@@ -8,18 +8,19 @@
 <div class="container mt-4">
     <!-- Card chính bao toàn bộ -->
     <div class="card shadow-lg">
-        <div class="card-header bg-primary text-white">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
             <h2 class="text-center mb-0 fw-bold">LỊCH SỬ SỬA CHỮA</h2>
-            <a class="btn btn-success btn-sm fw-bold text-uppercase" asp-action="ExportToExcel">
-                <i class="bi bi-file-earmark-excel"></i> Xuất Excel
-            </a>
-            <a href="/LichSuSuaChua/Chart" class="btn btn-warning fw-bold d-inline-flex align-items-center px-3 py-2">
-                <i class="bi bi-bar-chart me-2"></i> Xem biểu đồ Tỷ Lệ Thành Công
-            </a>
-
-            <a href="/LichSuSuaChua/RepairChart" class="btn btn-info fw-bold d-inline-flex align-items-center px-3 py-2">
-                <i class="bi bi-clock-history me-2"></i> Xem biểu đồ Thời Gian Sửa Chữa
-            </a>
+            <div class="button-group d-flex gap-2">
+                <a class="btn btn-success btn-sm fw-bold text-uppercase d-flex align-items-center" asp-action="ExportToExcel">
+                    <i class="bi bi-file-earmark-excel me-2"></i> Xuất Excel
+                </a>
+                <a href="/LichSuSuaChua/Chart" class="btn btn-warning btn-sm fw-bold d-flex align-items-center">
+                    <i class="bi bi-bar-chart me-2"></i> Xem biểu đồ Tỷ Lệ Thành Công
+                </a>
+                <a href="/LichSuSuaChua/RepairChart" class="btn btn-info btn-sm fw-bold d-flex align-items-center">
+                    <i class="bi bi-clock-history me-2"></i> Xem biểu đồ Thời Gian Sửa Chữa
+                </a>
+            </div>
         </div>
         <!-- Modal hiển thị biểu đồ -->
         <div class="modal fade" id="chartModal" tabindex="-1" aria-labelledby="chartModalLabel" aria-hidden="true">
