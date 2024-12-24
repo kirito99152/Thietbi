@@ -3,22 +3,34 @@
 *@
 @{
 }
-<div class="card shadow-lg">
-    
-        <form asp-action="ByOwner" method="get" class="form-inline">
-            <div class="form-group">
-                <label for="idNguoiSoHuu">Nhập ID Người Sở Hữu:</label>
-                <input type="number" id="idNguoiSoHuu" name="idNguoiSoHuu" class="form-control" required />
+<div class="container mt-5">
+    <div class="card shadow-lg p-4">
+        <h3 class="text-center mb-4 fw-bold">Tìm Kiếm Thiết Bị</h3>
+
+        <!-- Form Tìm Theo Người Sở Hữu -->
+        <form asp-action="ByOwner" method="get" class="row g-3 align-items-center">
+            <div class="col-md-8">
+                <label for="idNguoiSoHuu" class="form-label fw-bold">Nhập ID Người Sở Hữu:</label>
+                <input type="number" id="idNguoiSoHuu" name="idNguoiSoHuu" class="form-control" placeholder="Nhập ID..." required />
+           
+            <div class="col-md-4 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="fas fa-search"></i> Xem Thiết Bị
+                </button>
             </div>
-            <button type="submit" class="btn btn-primary">Xem Thiết Bị</button>
         </form>
 
-        <form asp-action="ByGroup" method="get" class="form-inline">
-            <div class="form-group">
-                <label for="idDonViiSoHuu">Nhập ID Đơn Vị Sở Hữu:</label>
-                <input type="number" id="idDonViSoHuu" name="idDonViSoHuu" class="form-control" required />
+        <!-- Form Tìm Theo Đơn Vị Sở Hữu -->
+        <form asp-action="ByGroup" method="get" class="row g-3 align-items-center mt-4">
+            <div class="col-md-8">
+                <label for="idDonViSoHuu" class="form-label fw-bold">Nhập ID Đơn Vị Sở Hữu:</label>
+                <input type="number" id="idDonViSoHuu" name="idDonViSoHuu" class="form-control" placeholder="Nhập ID..." required />
+            
+            <div class="col-md-4 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="fas fa-search"></i> Xem Thiết Bị
+                </button>
             </div>
-            <button type="submit" class="btn btn-primary">Xem Thiết Bị</button>
         </form>
-
     </div>
+</div>

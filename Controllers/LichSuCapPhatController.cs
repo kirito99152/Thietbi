@@ -170,7 +170,7 @@ namespace Thietbi.Controllers
                 var worksheet = package.Workbook.Worksheets.Add("Danh sách lịch sử cấp phát");
 
                 // Hợp nhất và đặt tiêu đề lớn
-                worksheet.Cells[1, 1, 1, 8].Merge = true;
+                worksheet.Cells[1, 1, 1, 7].Merge = true;
                 worksheet.Cells[1, 1].Value = "Báo cáo danh sách lịch sử cấp phát";
                 worksheet.Cells[1, 1].Style.Font.Bold = true;
                 worksheet.Cells[1, 1].Style.Font.Size = 16;
@@ -186,7 +186,7 @@ namespace Thietbi.Controllers
                 worksheet.Cells[2, 7].Value = "THIẾT BỊ";
 
                 // Định dạng tiêu đề
-                using (var range = worksheet.Cells[2, 1, 2, 8])
+                using (var range = worksheet.Cells[2, 1, 2, 7])
                 {
                     range.Style.Font.Bold = true;
                     range.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;

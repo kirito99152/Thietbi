@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Thietbi.Models;
 
@@ -7,7 +9,9 @@ public partial class TbThietBi
 {
     public int IdThietBi { get; set; }
 
+    [Range(1, int.MaxValue, ErrorMessage = "Chỉ được phép nhập số dương.")]
     public int? IdNguoiSoHuu { get; set; }
+    [Range(1, int.MaxValue, ErrorMessage = "Chỉ được phép nhập số dương.")]
 
     public int? IdDonViSoHuu { get; set; }
 

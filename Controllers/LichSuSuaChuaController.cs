@@ -239,7 +239,7 @@ namespace Thietbi.Controllers
                 var worksheet = package.Workbook.Worksheets.Add("Danh sách lịch sử sửa chữa");
 
                 // Hợp nhất và đặt tiêu đề lớn
-                worksheet.Cells[1, 1, 1, 8].Merge = true;
+                worksheet.Cells[1, 1, 1, 12].Merge = true;
                 worksheet.Cells[1, 1].Value = "Báo cáo danh sách lịch sử sửa chữa";
                 worksheet.Cells[1, 1].Style.Font.Bold = true;
                 worksheet.Cells[1, 1].Style.Font.Size = 16;
