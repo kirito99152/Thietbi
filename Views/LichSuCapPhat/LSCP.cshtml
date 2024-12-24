@@ -1,47 +1,113 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-@model IEnumerable<Thietbi.Models.TbLichSuCapPhat>
+﻿@model IEnumerable<Thietbi.Models.TbLichSuCapPhat>
 
 @{
     ViewData["Title"] = $"Lịch Sử Cấp Phát - ID Thiết Bị: {ViewData["IdThietBi"]}";
 }
 
-<h2>@ViewData["Title"]</h2>
-
-@if (!Model.Any())
-{
-    <p class="text-danger">Không có lịch sử cấp phát nào cho thiết bị này.</p>
-}
-else
-{
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID Cấp Phát</th>
-                <th>Người Được Giao</th>
-                <th>Đơn Vị Được Giao</th>
-                <th>Người Cấp Phát</th>
-                <th>Thời Gian Cấp Phát</th>
-                <th>Thời Gian Thu Hồi</th>
-                <th>Ghi Chú</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
+<div class="container mt-4">
+    <!-- Card bao toàn bộ -->
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h2 class="mb-0 fw-bold">Lịch Sử Cấp Phát - ID Thiết Bị: @ViewData["IdThietBi"]</h2>
+        </div>
+        <div class="card-body">
+            
+            @if (!Model.Any())
             {
-                <tr>
-                    <td>@item.IdLichSuCapPhat<td>
-                    <td>@item.IdNguoiDuocGiao</td>
-                    <td>@item.IdDonViDuocGiao</td>
-                    <td>@item.IdNguoiCapPhat</td>
-                    <td>@item.ThoiGianCapPhat?.ToString("dd/MM/yyyy HH:mm")</td>
-                    <td>@item.ThoiGianThuHoi?.ToString("dd/MM/yyyy HH:mm")</td>
-                    <td>@item.GhiChu</td>
-                </tr>
+                <p class="text-danger text-center fw-bold">Không có lịch sử cấp phát nào cho thiết bị này.</p>
             }
-        </tbody>
-    </table>
-}
+            else
+            {
+                <div class="table-responsive">
+                    <table id="ntable" class="table table-bordered table-striped align-middle">
+                        <thead class="bg-light">
+                            <tr class="text-center">
+                                <th>ID Cấp Phát</th>
+                                <th>Người Được Giao</th>
+                                <th>Đơn Vị Được Giao</th>
+                                <th>Người Cấp Phát</th>
+                                <th>Thời Gian Cấp Phát</th>
+                                <th>Thời Gian Thu Hồi</th>
+                                <th>Ghi Chú</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="text-center">@item.IdLichSuCapPhat</td>
+                                    <td>@item.IdNguoiDuocGiao</td>
+                                    <td>@item.IdDonViDuocGiao</td>
+                                    <td>@item.IdNguoiCapPhat</td>
+                                    <td>@item.ThoiGianCapPhat?.ToString("dd/MM/yyyy HH:mm")</td>
+                                    <td>@item.ThoiGianThuHoi?.ToString("dd/MM/yyyy HH:mm")</td>
+                                    <td>@item.GhiChu</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Nút Quay lại -->
+                <div class="text-center mb-4">
+                    <a href="/ThietBi/TraCuu" class="btn btn-outline-primary fw-bold px-4 py-2 shadow">
+                        <i class="bi bi-arrow-left-circle"></i> Quay lại
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- CSS tùy chỉnh -->
+<style>
+    body {
+        background-color: #f7f9fc; /* Nền dịu nhẹ */
+    }
+
+    .card {
+        border-radius: 15px; /* Bo góc */
+        overflow: hidden;
+    }
+
+    .card-header {
+        font-size: 1.25rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .btn {
+        font-size: 0.9rem; /* Kích thước nhỏ hơn */
+    }
+
+    .table {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+        .table thead th {
+            background-color: #f8f9fa; /* Nền sáng */
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        .table tbody tr:hover {
+            background-color: #eef3f7; /* Hiệu ứng hover */
+        }
+
+    .text-danger {
+        font-size: 1rem;
+        font-weight: bold;
+    }
+
+    .table tbody td {
+        vertical-align: middle;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+</style>
