@@ -1,0 +1,112 @@
+@model Thietbi.Models.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Đăng ký";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <!-- Card bao quanh -->
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h2 class="fw-bold mb-0">Đăng Ký</h2>
+                </div>
+                <div class="card-body p-4">
+                    <!-- Hiển thị thông báo lỗi -->
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger fw-bold text-center">@ViewBag.Error</div>
+                    }
+
+                    <!-- Hiển thị thông báo thành công -->
+                    @if (TempData["Message"] != null)
+                    {
+                        <div class="alert alert-success fw-bold text-center">@TempData["Message"]</div>
+                    }
+
+                    <!-- Form Đăng ký -->
+                    <form asp-action="Register" method="post">
+                        @Html.AntiForgeryToken() <!-- Bảo vệ chống CSRF -->
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Username" class="fw-bold">Tên đăng nhập</label>
+                            <input asp-for="Username" class="form-control border-secondary" placeholder="Nhập tên đăng nhập" />
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Password" class="fw-bold">Mật khẩu</label>
+                            <input asp-for="Password" type="password" class="form-control border-secondary" placeholder="Nhập mật khẩu" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label asp-for="IdPhong" class="fw-bold">ID Phòng</label>
+                            <input asp-for="IdPhong" type="number" class="form-control border-secondary" placeholder="Nhập ID Phòng" />
+                            <span asp-validation-for="IdPhong" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block fw-bold" style="width: 100%; font-size: 1rem;">
+                            Đăng Ký
+                        </button>
+                    </form>
+                </div>
+                <div class="card-footer text-center bg-light">
+                    <a asp-action="Login" class="text-decoration-underline fw-bold">Đã có tài khoản? Đăng nhập tại đây</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Thêm các script validation -->
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<!-- CSS tùy chỉnh -->
+<style>
+    body {
+        background-color: #f7f9fc; /* Nền dịu nhẹ */
+    }
+
+    .card {
+        border-radius: 15px; /* Bo góc */
+        overflow: hidden;
+    }
+
+    .card-header {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .btn {
+        font-size: 1rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        border-radius: 5px; /* Bo góc */
+        transition: all 0.3s ease; /* Hiệu ứng hover */
+    }
+
+        .btn:hover {
+            background-color: #0d6efd; /* Màu xanh khi hover */
+            color: #fff; /* Chữ trắng khi hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hiệu ứng đổ bóng */
+        }
+
+    .form-control {
+        font-size: 1rem;
+        padding: 0.75rem;
+    }
+
+    label {
+        font-size: 1rem;
+    }
+</style>
