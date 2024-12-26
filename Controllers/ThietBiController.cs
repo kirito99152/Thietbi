@@ -57,7 +57,7 @@ namespace Thietbi.Controllers
         // POST: ThietBi/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdNguoiSoHuu,IdDonViSoHuu,IdTrangThaiThietBi,IdLoaiThietBi,NgayThemThietBi,TenThietBi,MoTa,MaThietBiHv,MaThietBiNhaSx,CauHinh,ViTriDat")] TbThietBi tbThietBi)
+        public async Task<IActionResult> Create([Bind("IdThietBi,IdNguoiSoHuu,IdDonViSoHuu,IdTrangThaiThietBi,IdLoaiThietBi,NgayThemThietBi,TenThietBi,MoTa,MaThietBiHv,MaThietBiNhaSx,CauHinh,ViTriDat")] TbThietBi tbThietBi)
         {
             try
             {

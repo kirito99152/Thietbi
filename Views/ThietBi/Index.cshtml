@@ -33,6 +33,7 @@
                     <thead class="bg-light">
                         <tr class="text-center">
                             <th>STT</th>
+                            <th>ID THIẾT BỊ</th>
                             <th>ID NGƯỜI SỞ HỮU</th>
                             <th>ID ĐƠN VỊ SỞ HỮU</th>
                             <th>NGÀY THÊM</th>
@@ -55,6 +56,7 @@
                             {
                                 <tr>
                                     <td class="text-center">@(++stt)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.IdThietBi)</td>
                                     <td>@Html.DisplayFor(modelItem => item.IdNguoiSoHuu)</td>
                                     <td>@Html.DisplayFor(modelItem => item.IdDonViSoHuu)</td>
                                     <td>@Html.DisplayFor(modelItem => item.NgayThemThietBi)</td>
